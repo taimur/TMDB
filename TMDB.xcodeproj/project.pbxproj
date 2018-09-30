@@ -100,7 +100,12 @@
 			isa = PBXGroup;
 			children = (
 				9CC365D3215F7A34001D7BDD /* AppDelegate.swift */,
-				9CC365D5215F7A34001D7BDD /* ViewController.swift */,
+				9CC36604215F9856001D7BDD /* Controllers */,
+				9CC366052160D7D7001D7BDD /* UI */,
+				9CC366072160DDAD001D7BDD /* Networking */,
+				9CC366082160DDB9001D7BDD /* Managers */,
+				9CC366092160DDC7001D7BDD /* Models */,
+				9CC3660A2160DE7B001D7BDD /* External */,
 				9CC365D7215F7A34001D7BDD /* Main.storyboard */,
 				9CC365DD215F7A36001D7BDD /* Assets.xcassets */,
 				9CC365DF215F7A36001D7BDD /* LaunchScreen.storyboard */,
@@ -126,6 +131,57 @@
 				9CC365F8215F7A36001D7BDD /* Info.plist */,
 			);
 			path = TMDBUITests;
+			sourceTree = "<group>";
+		};
+		9CC36604215F9856001D7BDD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9CC365D5215F7A34001D7BDD /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9CC366052160D7D7001D7BDD /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9CC366062160D7F3001D7BDD /* Views */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		9CC366062160D7F3001D7BDD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9CC366072160DDAD001D7BDD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		9CC366082160DDB9001D7BDD /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		9CC366092160DDC7001D7BDD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9CC3660A2160DE7B001D7BDD /* External */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = External;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
