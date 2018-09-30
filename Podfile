@@ -6,8 +6,13 @@ target 'TMDB' do
   use_frameworks!
 
   # Pods for TMDB
-   pod 'Alamofire', '~> 4.7'
-
+   pod "Alamofire", "~> 4.7"
+   pod "AlamofireObjectMapper", "~> 5.0" # Mapping Response into Objects
+   pod "SDWebImage", "~>3.8" # Asynchronus Image loading
+   pod "MBProgressHUD", "~> 1.0.0" # Showing Loader view
+   pod "SwiftyJSON" # Converting response into swift type
+   pod "STPopup" # PopOver for iPhone
+   
   target 'TMDBTests' do
     inherit! :search_paths
     # Pods for testing
