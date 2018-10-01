@@ -80,7 +80,6 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     // For verification check this image link with several width values
     //https://image.tmdb.org/t/p/w800/vR9YvUJCead23MOWwVzv9776eb1.jpg
 
-
     //let width:String = String(format: "w%.0f", self.imageView.frame.width * UIScreen.main.scale)
     //let height:String = String(format: "h%.0f", self.imageView.frame.height * UIScreen.main.scale)
 
@@ -98,8 +97,7 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     }
 
   }
-  func baseURL() -> String
-  {
+  func baseURL() -> String {
     return "https://image.tmdb.org/t/p/"
   }
 

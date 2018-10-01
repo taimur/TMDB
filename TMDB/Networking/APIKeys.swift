@@ -10,6 +10,7 @@ import Foundation
 
 // Token associated with the account - Being used in all API Calls
 let tmdb_authkey = "2696829a81b1b5827d515ff121700838"
+
 // Endpoints
 let kSearch = "/search"
 let kEndPointMovies = "/movie"
