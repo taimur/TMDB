@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class TMDBMoviesViewController: UIViewController {
 
@@ -14,23 +15,17 @@ class TMDBMoviesViewController: UIViewController {
   let minimumRowItemObjectsInRow = 3
   let reuseIdentifier = "cellIdentifier"
   let headerIdentifier = "headerIdentifier"
-
   @IBOutlet weak var moviesCollectionView:UICollectionView!
   private let layout = UICollectionViewFlowLayout()
+
+  //IBOutlets
   @IBOutlet weak var txtfSearch:UITextField!
 
   fileprivate var arrResults:[AnyObject] = [AnyObject]()
   fileprivate var moviesTotalPages = ""
   var currPageNumber = "1"
-
   var fetchInProgress:Bool = false // Avoid multiple calls
   var loadingMoreAssets:Bool = false // Pagination
-
-  // Other controls
-  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-  @IBOutlet weak var movielistSegControl:UISegmentedControl!
-  @IBOutlet weak var lblFilterStatus:UILabel!
-  @IBOutlet weak var btnResetFilter:UIButton!
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,14 +33,14 @@ class TMDBMoviesViewController: UIViewController {
     // Do any additional setup after loading the view, typically from a nib.
   }
 
-  override func viewWillAppear(_ animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
+    self.getMovies(withKeywords: "Batman", forPageNumber: "1")
   }
 
   // MARK: USER_DEFINED)_FUNCTIONS
   func setupView() {
 
     self.layout.scrollDirection = UICollectionViewScrollDirection.vertical
-
     self.layout.minimumInteritemSpacing = self.spaceBetweenCells()
     self.layout.minimumLineSpacing = self.spaceBetweenCells()
     self.layout.sectionInset =
@@ -55,9 +50,7 @@ class TMDBMoviesViewController: UIViewController {
                        self.spaceBetweenCells())
 
     self.moviesCollectionView.collectionViewLayout = layout
-
     self.moviesCollectionView.backgroundColor = UIColor.clear
-
 
     // Register cell classes
 
@@ -67,28 +60,24 @@ class TMDBMoviesViewController: UIViewController {
 
   internal func getMovies(withKeywords keywords:String, forPageNumber number:String)
   {
-    if self.fetchInProgress == true
-    {
+    if self.fetchInProgress == true {
       return
     }
 
     self.fetchInProgress = true
-    self.activityIndicator.startAnimating()
+    MBProgressHUD.showAdded(to: self.view, animated: true)
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock:{(results,totalPages) ->
       Void in
 
-      if let _ = results
+      if let arr = results
       {
         //print(results!)
-        if let _ = totalPages
-        {
-          print(totalPages!)
-          self.moviesTotalPages = totalPages!
+        if let pages = totalPages {
+          print(pages)
+          self.moviesTotalPages = pages
         }
-        if self.loadingMoreAssets == false
-        {
-          if self.arrResults.count > 0
-          {
+        if self.loadingMoreAssets == false {
+          if self.arrResults.count > 0 {
             self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
 
           }
@@ -97,17 +86,14 @@ class TMDBMoviesViewController: UIViewController {
 
         self.arrResults += results as! [AnyObject]
 
-        self.activityIndicator.stopAnimating()
-        self.activityIndicator.hidesWhenStopped = true
+        MBProgressHUD.hide(for: self.view, animated: false)
         self.moviesCollectionView.reloadData()
         self.fetchInProgress = false
-
-
       }
-
     }, failedBlock:
       {
         // Show Alert Please try again
+        self.fetchInProgress = false
         print()
     })
   }
@@ -119,16 +105,15 @@ class TMDBMoviesViewController: UIViewController {
 
   func posterCellSize(_ numberOfCellsInRow: Int) -> CGSize {
 
-    /*
-     Images on the server have this 3 sizes -
-     300 x 445
-     500 x 741
-     600 x 889
+    /* Images on the server have this 3 sizes -
+       300 x 445
+       500 x 741
+       600 x 889
 
-     Ratiio / 69:89
+       Ratiio / 69:89
 
-     Link - http://andrew.hedges.name/experiments/aspect_ratio/
-     */
+       Link - http://andrew.hedges.name/experiments/aspect_ratio/
+    */
 
     let originalWidth: CGFloat = 300
     let originalHeight: CGFloat = 450
@@ -149,20 +134,43 @@ class TMDBMoviesViewController: UIViewController {
   }
 }
 
-extension TMDBMoviesViewController: UICollectionViewDelegate {
+// MARK: - UICollectionViewDataSource
+extension TMDBMoviesViewController: UICollectionViewDataSource {
 
   func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return arrResults.count
+  }
 
-    return self.arrResults.count
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+    var view: UICollectionReusableView!
+    let tempView = self.moviesCollectionView!.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier, for: indexPath)
+
+    for subview in tempView.subviews {
+      subview.removeFromSuperview()
+    }
+
+    let label = UILabel(frame: CGRect(x: self.spaceBetweenCells(),
+                                      y: tempView.center.y + self.spaceBetweenCells(),
+                                      width: tempView.frame.size.width - (self.spaceBetweenCells() * 2),
+                                      height: tempView.frame.size.height))
+
+    label.textColor = UIColor.darkGray
+    label.font = UIFont(name: "Helvetica-Bold", size: 16.0)
+    label.textAlignment = NSTextAlignment.left
+    tempView.addSubview(label)
+    view = tempView
+    return view
   }
 }
 
-extension TMDBMoviesViewController: UICollectionViewDataSource {
-  // MARK: - UICollectionViewDelegates
+// MARK: - UICollectionViewDelegates
+extension TMDBMoviesViewController: UICollectionViewDelegate {
+
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     var cell: UICollectionViewCell = UICollectionViewCell()
@@ -176,12 +184,9 @@ extension TMDBMoviesViewController: UICollectionViewDataSource {
       posterCell.contentView.backgroundColor = UIColor.clear
       posterCell.backgroundColor = UIColor.clear
       posterCell.lblMovieTitle.text = (movieObject as! TMDBMovieObject).title
-
-      //posterCell.placeholderImage = UIImage(named: "title_placeholder.png")
       posterCell.imageViewContentMode = UIViewContentMode.scaleAspectFit
 
-      if let posterPath = (movieObject as! TMDBMovieObject).poster_path
-      {
+      if let posterPath = (movieObject as! TMDBMovieObject).poster_path {
         posterCell.imageURLString = posterPath
       }
 
@@ -190,6 +195,10 @@ extension TMDBMoviesViewController: UICollectionViewDataSource {
     return cell
 
   }
+}
+
+extension TMDBMoviesViewController: UICollectionViewDelegateFlowLayout {
+
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     let size: CGSize = CGSize(width: self.moviesCollectionView!.frame.size.width, height: 40)
     return size
@@ -199,40 +208,10 @@ extension TMDBMoviesViewController: UICollectionViewDataSource {
     return UIEdgeInsetsMake(0, self.spaceBetweenCells(), self.spaceBetweenCells(), self.spaceBetweenCells())
   }
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
     let size = self.posterCellSize(self.minimumRowItemObjectsInRow)
-
     return size
-  }
-
-
-  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
-    var view: UICollectionReusableView!
-
-    let tempView = self.moviesCollectionView!.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier, for: indexPath)
-
-    for subview in tempView.subviews
-    {
-      subview.removeFromSuperview()
-    }
-
-    let label = UILabel(frame: CGRect(x: self.spaceBetweenCells(),
-                                      y: tempView.center.y + self.spaceBetweenCells(),
-                                      width: tempView.frame.size.width - (self.spaceBetweenCells() * 2),
-                                      height: tempView.frame.size.height))
-
-    label.textColor = UIColor.darkGray
-
-    label.font = UIFont(name: "Helvetica-Bold", size: 16.0)
-    label.textAlignment = NSTextAlignment.left
-
-    tempView.addSubview(label)
-
-    view = tempView
-
-    return view
   }
 }
 extension TMDBMoviesViewController: UITextFieldDelegate {
@@ -240,22 +219,18 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
   // MARK: TextField Resign Responder
 
   @objc func didTapView() {
-
     self.view.endEditing(true)
   }
 
-
-  func textFieldDidEndEditing(_ textField: UITextField) {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = textField.text {
       self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
     }
-
+    return true
   }
 
   func textFieldDidReturn(_ textField: UITextField) -> Bool {
     self.view.endEditing(true)
-
-
     return true
   }
 }

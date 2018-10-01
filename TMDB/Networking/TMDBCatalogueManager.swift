@@ -35,26 +35,22 @@ class TMDBCatalogueManager: NSObject {
 
     return Static.instance!
   }
+
   // MARK: Helper_functions
-  func baseURL() -> String
-  {
+  func baseURL() -> String {
     return "https://api.themoviedb.org/3"
   }
-  func appendAPIKey() -> String
-  {
+
+  func appendAPIKey() -> String {
     return "?api_key=\(tmdb_authkey)"
   }
-  func appendLang() -> String
-  {
-    return "&language=" + TMDBLanguageManager.sharedInstance.selectedLanguage()
-  }
-  func appendParameters(parameters:String) ->String
-  {
+
+  func appendParameters(parameters:String) ->String {
     return parameters == "" ? "":self.andSign + parameters
   }
-  func generateURL(_ endPoint:String,parameters:String) -> String
-  {
-    return self.baseURL() + endPoint + self.appendAPIKey() + self.appendLang() + self.appendParameters(parameters: parameters)
+
+  func generateURL(_ endPoint:String,parameters:String) -> String {
+    return self.baseURL() + endPoint + self.appendAPIKey() + self.appendParameters(parameters: parameters)
   }
 
 
@@ -64,7 +60,7 @@ class TMDBCatalogueManager: NSObject {
     //http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=batman&page=1
     let query = "query=\(text)"
     let page = "page=\(number)"
-    let parameters = query + "&" + "page"
+    let parameters = query + "&" + page
     
     let endpoint = kEndPointMovies
     let urlString = self.generateURL(endpoint, parameters: parameters)

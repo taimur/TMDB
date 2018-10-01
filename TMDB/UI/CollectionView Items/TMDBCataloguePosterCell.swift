@@ -35,16 +35,12 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     }
   }
 
-
-
   var imageView: UIImageView!
 
-  override init(frame: CGRect)
-  {
+  override init(frame: CGRect) {
     super.init(frame: frame)
 
     self.imageView = UIImageView(frame: self.bounds)
-
     self.backgroundColor = UIColor.white
 
     // TODO: Change me!!
@@ -54,8 +50,6 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
 
     //premium label
     let labelFrame = CGRect(x: 0, y: frame.size.height - (kMovielabelHeight - 10.0 ), width: frame.size.width, height: kMovielabelHeight)
-
-    //self.lblMovieTitle = UILabel(frame: labelFrame)
 
     self.lblMovieTitle = MarqueeLabel(frame: labelFrame)
     self.lblMovieTitle.type = .continuous
