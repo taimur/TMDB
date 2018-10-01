@@ -16,6 +16,7 @@ class TMDBMoviesViewController: UIViewController {
   let minimumRowItemObjectsInRow = 3
   let reuseIdentifier = "cellIdentifier"
   let headerIdentifier = "headerIdentifier"
+
   @IBOutlet weak var moviesCollectionView:UICollectionView!
   private let layout = UICollectionViewFlowLayout()
 
@@ -29,7 +30,9 @@ class TMDBMoviesViewController: UIViewController {
 
   var fetchInProgress:Bool = false // Avoid multiple calls
   var loadingMoreAssets:Bool = false // Pagination
-  var suggestedKeywords: [NSManagedObject] = []
+  var suggestedKeywords: [NSManagedObject] = [] // To Save Values
+
+  var controller: SuggestedValuesTVC! // Tableview For PopUp
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,7 +41,7 @@ class TMDBMoviesViewController: UIViewController {
   }
 
   override func viewWillAppear(_ animated: Bool) {
-
+    fetch()
   }
   // MARK: USER_DEFINED_FUNCTIONS
   @objc func didTapView() {
@@ -158,15 +161,17 @@ class TMDBMoviesViewController: UIViewController {
 
     var items = [String]()
     for keywords in suggestedKeywords {
-      if let value = keywords.value(forKeyPath: "value") as? String  {
+      if let value = keywords.value(forKeyPath: DB_ATTRIBUTES) as? String  {
         items.append(value)
       }
     }
 
-    let controller = SuggestedValuesTVC(items) { (name) in
+    controller = SuggestedValuesTVC(items) { (name) in
       self.txtfSearch.text = name
       self.getMovies(withKeywords: name, forPageNumber: self.currPageNumber)
+      self.controller.dismiss(animated: true, completion: nil)
     }
+    controller.preferredContentSize = CGSize(width: 300.0, height: 300.0)
 
     let presentationController = PopOverPresenter.configurePresentation(forController: controller)
     presentationController.sourceView = sender
@@ -174,7 +179,22 @@ class TMDBMoviesViewController: UIViewController {
     presentationController.permittedArrowDirections = [.down, .up]
     self.present(controller, animated: true)
   }
-// MARK: - DATA_PERSISTANCE
+
+  // MARK: - DATA_PERSISTANCE
+  func fetch() {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return
+    }
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: DB_ENTITY)
+    fetchRequest.fetchLimit = 10
+    do {
+      suggestedKeywords = try managedContext.fetch(fetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
 
   func save(keyword: String) {
 
@@ -183,13 +203,13 @@ class TMDBMoviesViewController: UIViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entity = NSEntityDescription.entity(forEntityName: "SuggestedKeywords",
+    let entity = NSEntityDescription.entity(forEntityName: DB_ENTITY,
                                  in: managedContext)!
 
     let keywords = NSManagedObject(entity: entity,
                                  insertInto: managedContext)
 
-    keywords.setValue(keyword, forKeyPath: "keywords")
+    keywords.setValue(keyword, forKeyPath: DB_ATTRIBUTES)
 
     do {
       try managedContext.save()
@@ -276,7 +296,7 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
         })
       }
         ,failedBlock:{
-          self.showAlert(withTitle: "Error!", andMessage: "Please try again")
+          self.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
           MBProgressHUD.hide(for: self.view, animated: true)
       })
     }
@@ -309,8 +329,13 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
   func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
     return true
   }
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    self.controller.dismiss(animated: true, completion: nil)
+    return true
+  }
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = textField.text {
+      self.controller.dismiss(animated: true, completion: nil)
       self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
     }
     return true
