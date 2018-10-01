@@ -9,7 +9,6 @@
 import UIKit
 import MBProgressHUD
 import CoreData
-import STPopup
 
 class TMDBMoviesViewController: UIViewController {
 
@@ -27,9 +26,10 @@ class TMDBMoviesViewController: UIViewController {
   fileprivate var arrResults:[AnyObject] = [AnyObject]()
   fileprivate var moviesTotalPages = ""
   var currPageNumber = "1"
+
   var fetchInProgress:Bool = false // Avoid multiple calls
   var loadingMoreAssets:Bool = false // Pagination
-  var suggestedValues: [NSManagedObject] = []
+  var suggestedKeywords: [NSManagedObject] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -93,10 +93,13 @@ class TMDBMoviesViewController: UIViewController {
           if tempArray.count == 0 {
             self.lblfInfo.isHidden = false
             self.showAlert(withTitle: ERROR_TITLE, andMessage: NO_MOVIE_FOUND)
+            return
           }
           self.arrResults.removeAll(keepingCapacity: false)
         }
-
+        if let text = self.txtfSearch.text {
+          self.save(keyword:text)
+        }
         self.arrResults += results as! [AnyObject]
         self.moviesCollectionView.reloadData()
         self.fetchInProgress = false
@@ -154,7 +157,7 @@ class TMDBMoviesViewController: UIViewController {
   func showPopUp(_ sender: UITextField) {
 
     var items = [String]()
-    for keywords in suggestedValues {
+    for keywords in suggestedKeywords {
       if let value = keywords.value(forKeyPath: "value") as? String  {
         items.append(value)
       }
@@ -170,6 +173,30 @@ class TMDBMoviesViewController: UIViewController {
     presentationController.sourceRect = sender.bounds
     presentationController.permittedArrowDirections = [.down, .up]
     self.present(controller, animated: true)
+  }
+// MARK: - DATA_PERSISTANCE
+
+  func save(keyword: String) {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entity = NSEntityDescription.entity(forEntityName: "SuggestedKeywords",
+                                 in: managedContext)!
+
+    let keywords = NSManagedObject(entity: entity,
+                                 insertInto: managedContext)
+
+    keywords.setValue(keyword, forKeyPath: "keywords")
+
+    do {
+      try managedContext.save()
+      suggestedKeywords.append(keywords)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 }
 
@@ -274,8 +301,8 @@ extension TMDBMoviesViewController: UICollectionViewDelegateFlowLayout {
 extension TMDBMoviesViewController: UITextFieldDelegate {
 
   func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-    if suggestedValues.count > 0 {
-      wself.showPopUp(textField)
+    if suggestedKeywords.count > 0 {
+      self.showPopUp(textField)
     }
     return true
   }
