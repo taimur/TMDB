@@ -246,7 +246,7 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
 
 
   func textFieldDidEndEditing(_ textField: UITextField) {
-    if text = textfield.text {
+    if let text = textField.text {
       self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
     }
 
