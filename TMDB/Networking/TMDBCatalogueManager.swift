@@ -62,7 +62,7 @@ class TMDBCatalogueManager: NSObject {
     let page = "page=\(number)"
     let parameters = query + "&" + page
     
-    let endpoint = kEndPointMovies
+    let endpoint = kSearch + kEndPointMovies
     let urlString = self.generateURL(endpoint, parameters: parameters)
 
     Alamofire.request(urlString, method: .get, parameters: ["":""], encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
