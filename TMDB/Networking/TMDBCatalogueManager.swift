@@ -92,6 +92,39 @@ class TMDBCatalogueManager: NSObject {
         }
 
         break
+      case .failure(_):
+        if let error = response.result.error {
+          print(error)
+        }
+        break
+      }
+    }
+  }
+
+  func getMovieDetails(withMovieId id:String, successBlock: @escaping (_ movieObject: TMDBMovieDetailsObject?) -> Void, failedBlock: @escaping () -> Void) {
+    let parameters = ""
+    let endpoint = kEndPointMovies + self.backSlash + id
+    let urlString = self.generateURL(endpoint, parameters: parameters)
+
+    Alamofire.request(urlString, method: .get, parameters: ["":""], encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
+
+      switch(response.result) {
+      case .success(_):
+        let results = NSMutableArray()
+        if((response.result.value) != nil) {
+          let swiftyJsonVar = JSON(response.result.value!)
+
+          if let item = swiftyJsonVar.dictionaryObject {
+
+            let object = Mapper<TMDBMovieDetailsObject>().map(JSONObject: item)
+            results.add(object!)
+
+            successBlock(object)
+          }
+
+        }
+
+        break
 
       case .failure(_):
         if let error = response.result.error {
