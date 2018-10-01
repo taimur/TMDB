@@ -21,7 +21,10 @@ class TMDBMoviesViewController: UIViewController {
 
   fileprivate var arrResults:[AnyObject] = [AnyObject]()
   fileprivate var moviesTotalPages = ""
+  var currPageNumber = "1"
 
+  var fetchInProgress:Bool = false // Avoid multiple calls
+  var loadingMoreAssets:Bool = false // Pagination
 
   // Other controls
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -60,6 +63,53 @@ class TMDBMoviesViewController: UIViewController {
 
     self.moviesCollectionView!.register(TMDBCataloguePosterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     self.moviesCollectionView!.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier)
+  }
+
+  internal func getMovies(withKeywords keywords:String, forPageNumber number:String)
+  {
+    if self.fetchInProgress == true
+    {
+      return
+    }
+
+    self.fetchInProgress = true
+    self.activityIndicator.startAnimating()
+    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock:{(results,totalPages) ->
+      Void in
+
+      if let _ = results
+      {
+        //print(results!)
+        if let _ = totalPages
+        {
+          print(totalPages!)
+          self.moviesTotalPages = totalPages!
+        }
+        if self.loadingMoreAssets == false
+        {
+          if self.arrResults.count > 0
+          {
+            self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
+
+          }
+          self.arrResults.removeAll(keepingCapacity: false)
+        }
+
+        self.arrResults += results as! [AnyObject]
+
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.hidesWhenStopped = true
+        self.moviesCollectionView.reloadData()
+        self.fetchInProgress = false
+
+
+      }
+
+    }, failedBlock:
+      {
+        // Show Alert Please try again
+        print()
+    })
   }
 
   override func didReceiveMemoryWarning() {
@@ -194,17 +244,17 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
     self.view.endEditing(true)
   }
 
-  func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
 
-    return true
-  }
   func textFieldDidEndEditing(_ textField: UITextField) {
-    
+    if text = textfield.text {
+      self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
+    }
+
   }
 
   func textFieldDidReturn(_ textField: UITextField) -> Bool {
-
     self.view.endEditing(true)
+
 
     return true
   }
