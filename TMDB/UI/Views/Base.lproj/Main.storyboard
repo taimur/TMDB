@@ -46,9 +46,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="9BU-a6-4hC"/>
                                 </connections>
                             </collectionView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="doe-Tt-6FH">
-                                <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
-                            </activityIndicatorView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Movie title to search..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="q7b-7U-6Xi">
                                 <rect key="frame" x="16" y="28" width="343" height="30"/>
                                 <nil key="textColor"/>
@@ -65,16 +62,13 @@
                             <constraint firstItem="Xy9-29-xa6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="AUK-kz-Z0h"/>
                             <constraint firstItem="q7b-7U-6Xi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="EI8-vH-A1x"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xy9-29-xa6" secondAttribute="bottom" id="LUp-CZ-gq0"/>
-                            <constraint firstItem="doe-Tt-6FH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RSx-hL-cDd"/>
                             <constraint firstItem="Xy9-29-xa6" firstAttribute="top" secondItem="q7b-7U-6Xi" secondAttribute="bottom" constant="20" id="SV7-J6-3lP"/>
                             <constraint firstItem="q7b-7U-6Xi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YRb-Er-1QE"/>
-                            <constraint firstItem="doe-Tt-6FH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="j4w-2H-syk"/>
                             <constraint firstAttribute="trailing" secondItem="Xy9-29-xa6" secondAttribute="trailing" id="yWC-EB-dXA"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="doe-Tt-6FH" id="ezu-E4-T95"/>
                         <outlet property="moviesCollectionView" destination="Xy9-29-xa6" id="c5o-8S-iqu"/>
                         <outlet property="txtfSearch" destination="q7b-7U-6Xi" id="cAD-0b-hvp"/>
                     </connections>
