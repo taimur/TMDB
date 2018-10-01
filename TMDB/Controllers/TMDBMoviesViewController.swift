@@ -8,6 +8,8 @@
 
 import UIKit
 import MBProgressHUD
+import CoreData
+import STPopup
 
 class TMDBMoviesViewController: UIViewController {
 
@@ -27,6 +29,7 @@ class TMDBMoviesViewController: UIViewController {
   var currPageNumber = "1"
   var fetchInProgress:Bool = false // Avoid multiple calls
   var loadingMoreAssets:Bool = false // Pagination
+  var suggestedValues: [NSManagedObject] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,6 +41,9 @@ class TMDBMoviesViewController: UIViewController {
 
   }
   // MARK: USER_DEFINED_FUNCTIONS
+  @objc func didTapView() {
+    self.view.endEditing(true)
+  }
 
   func setupView() {
 
@@ -86,7 +92,7 @@ class TMDBMoviesViewController: UIViewController {
           }
           if tempArray.count == 0 {
             self.lblfInfo.isHidden = false
-            self.showAlert(withTitle: "Error!", andMessage: "No Movies found, Please try with different title")
+            self.showAlert(withTitle: ERROR_TITLE, andMessage: NO_MOVIE_FOUND)
           }
           self.arrResults.removeAll(keepingCapacity: false)
         }
@@ -98,6 +104,7 @@ class TMDBMoviesViewController: UIViewController {
     }, failedBlock:
       {
         // Show Alert Please try again
+        self.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
         self.fetchInProgress = false
         MBProgressHUD.hide(for: self.view, animated: true)
         print()
@@ -144,7 +151,26 @@ class TMDBMoviesViewController: UIViewController {
     alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
     self.present(alert, animated: true, completion: nil)
   }
+  func showPopUp(_ sender: UITextField) {
 
+    var items = [String]()
+    for keywords in suggestedValues {
+      if let value = keywords.value(forKeyPath: "value") as? String  {
+        items.append(value)
+      }
+    }
+
+    let controller = SuggestedValuesTVC(items) { (name) in
+      self.txtfSearch.text = name
+      self.getMovies(withKeywords: name, forPageNumber: self.currPageNumber)
+    }
+
+    let presentationController = PopOverPresenter.configurePresentation(forController: controller)
+    presentationController.sourceView = sender
+    presentationController.sourceRect = sender.bounds
+    presentationController.permittedArrowDirections = [.down, .up]
+    self.present(controller, animated: true)
+  }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -187,11 +213,9 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     var cell: UICollectionViewCell = UICollectionViewCell()
-
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
 
-    if movieObject is TMDBMovieObject
-    {
+    if movieObject is TMDBMovieObject {
       let posterCell: TMDBCataloguePosterCell = (collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) ) as! TMDBCataloguePosterCell
 
       posterCell.contentView.backgroundColor = UIColor.clear
@@ -212,8 +236,7 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
     MBProgressHUD.showAdded(to: self.view, animated: true)
 
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
-    if let tempID = (movieObject as! TMDBMovieObject).id
-    {
+    if let tempID = (movieObject as! TMDBMovieObject).id {
       TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: String(tempID), successBlock: {(movieDetailsObject) ->
         Void in
 
@@ -246,14 +269,19 @@ extension TMDBMoviesViewController: UICollectionViewDelegateFlowLayout {
     return size
   }
 }
+
+// MARK: TextField_Delegates
 extension TMDBMoviesViewController: UITextFieldDelegate {
 
-  // MARK: TextField Resign Responder
-
-  @objc func didTapView() {
-    self.view.endEditing(true)
+  func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+    if suggestedValues.count > 0 {
+      wself.showPopUp(textField)
+    }
+    return true
   }
-
+  func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+    return true
+  }
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = textField.text {
       self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
@@ -266,33 +294,35 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
     return true
   }
 }
-extension TMDBMoviesViewController: UIScrollViewDelegate {
-  //MARK: UIScrollView_Delegate
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-    let bottom:CGFloat = self.moviesCollectionView.contentOffset.y + self.moviesCollectionView.frame.size.height
-    if bottom >= scrollView.contentSize.height {
-      if self.fetchInProgress == false {
-        self.loadingMoreAssets = true
-        var validPage = true
-        var tempPageNo = Int(self.currPageNumber)! + 1
-        if tempPageNo > 1000 {
+//MARK: UIScrollView_Delegate
+extension TMDBMoviesViewController: UIScrollViewDelegate {
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+  let bottom:CGFloat = self.moviesCollectionView.contentOffset.y + self.moviesCollectionView.frame.size.height
+
+  if bottom >= scrollView.contentSize.height {
+    if self.fetchInProgress == false {
+      self.loadingMoreAssets = true
+      var validPage = true
+      var tempPageNo = Int(self.currPageNumber)! + 1
+      if tempPageNo > 1000 {
+        validPage = false
+        tempPageNo = 1000 // TMDB APIs have limit for pages of 1 to 1000
+      }
+      if self.moviesTotalPages.isEmpty == false {
+        if tempPageNo >= Int(self.moviesTotalPages)!
+        {
           validPage = false
-          tempPageNo = 1000 // TMDB APIs have limit for pages of 1 to 1000
         }
-        if self.moviesTotalPages.isEmpty == false {
-          if tempPageNo >= Int(self.moviesTotalPages)!
-          {
-            validPage = false
-          }
-        }
-        self.currPageNumber = String(tempPageNo)
-        if validPage == true {
-           if let text = txtfSearch.text {
-             self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
-           }
-          }
+      }
+      self.currPageNumber = String(tempPageNo)
+      if validPage == true {
+         if let text = txtfSearch.text {
+           self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
+         }
         }
       }
     }
+  }
 }
