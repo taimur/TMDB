@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import KVNProgress
 
 class TMDBMoviesViewController: UIViewController {
 
@@ -35,23 +34,12 @@ class TMDBMoviesViewController: UIViewController {
   }
 
   override func viewDidAppear(_ animated: Bool) {
-    self.txtfSearch.text = "Batman"
-    self.getMovies(withKeywords: "Batman", forPageNumber: "1")
+    //self.txtfSearch.text = "Batman"
+    //self.getMovies(withKeywords: "Batman", forPageNumber: "1")
+
+    showAlert(withTitle: "Error", andMessage: "No Movies found, Please try with different title")
   }
   // MARK: USER_DEFINED_FUNCTIONS
-  func initTimer() {
-    var progress:CGFloat = 0.0
-
-    KVNProgress.show(progress + 0.1, status: "Loading...")
-    Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (timer) in
-      progress += 0.1
-      self.updateProgress(withProgress: progress)
-    }
-  }
-  func updateProgress(withProgress progress:CGFloat) {
-    KVNProgress.update(progress, animated: true)
-  }
-
 
   func setupView() {
 
@@ -82,14 +70,13 @@ class TMDBMoviesViewController: UIViewController {
     }
 
     self.fetchInProgress = true
-    initTimer()
-
+    MBProgressHUD.showAdded(to: self.view, animated: true)
+    
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock:{(results,totalPages) ->
       Void in
 
       if let tempArray = results
       {
-        KVNProgress.dismiss()
         if let pages = totalPages {
           self.moviesTotalPages = pages
         }
@@ -98,7 +85,9 @@ class TMDBMoviesViewController: UIViewController {
             self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
           }
           if tempArray.count == 0 {
-            KVNProgress.showError(withStatus: "No Movies found, Please try with different title")
+            showAlert(withTitle: "Error", andMessage: "No Movies found, Please try with different title")
+
+            //KVNProgress.showError(withStatus: "No Movies found, Please try with different title")
           }
           self.arrResults.removeAll(keepingCapacity: false)
         }
@@ -150,6 +139,13 @@ class TMDBMoviesViewController: UIViewController {
   func spaceBetweenCells() -> CGFloat {
     return 10.0
   }
+
+  func showAlert(withTitle title:String, andMessage message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+
 }
 
 // MARK: - UICollectionViewDataSource
@@ -211,6 +207,30 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
       cell = posterCell
     }
     return cell
+  }
+
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    showProgress()
+    let movieObject = self.arrResults[(indexPath as IndexPath).item]
+    if let tempID = (movieObject as! TMDBMovieObject).id
+    {
+      TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: String(tempID), successBlock: {(movieDetailsObject) ->
+        Void in
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let movieDetailViewController = storyboard.instantiateViewController(withIdentifier: "movieDetails") as! TMDBMovieDetailsViewController
+        movieDetailViewController.movieDetailsObject = movieDetailsObject
+
+        self.present(movieDetailViewController, animated: true, completion: {() -> Void in
+
+        })
+      }
+        ,failedBlock:{
+          KVNProgress.showError(withStatus: "Please try again")
+          print("Error")
+
+      })
+    }
 
   }
 }
