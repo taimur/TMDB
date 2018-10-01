@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import KVNProgress
 
 class TMDBMoviesViewController: UIViewController {
 
@@ -34,10 +35,24 @@ class TMDBMoviesViewController: UIViewController {
   }
 
   override func viewDidAppear(_ animated: Bool) {
+    self.txtfSearch.text = "Batman"
     self.getMovies(withKeywords: "Batman", forPageNumber: "1")
   }
+  // MARK: USER_DEFINED_FUNCTIONS
+  func initTimer() {
+    var progress:CGFloat = 0.0
 
-  // MARK: USER_DEFINED)_FUNCTIONS
+    KVNProgress.show(progress + 0.1, status: "Loading...")
+    Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (timer) in
+      progress += 0.1
+      self.updateProgress(withProgress: progress)
+    }
+  }
+  func updateProgress(withProgress progress:CGFloat) {
+    KVNProgress.update(progress, animated: true)
+  }
+
+
   func setupView() {
 
     self.layout.scrollDirection = UICollectionViewScrollDirection.vertical
@@ -60,33 +75,36 @@ class TMDBMoviesViewController: UIViewController {
 
   internal func getMovies(withKeywords keywords:String, forPageNumber number:String)
   {
+    self.view.endEditing(true)
+
     if self.fetchInProgress == true {
       return
     }
 
     self.fetchInProgress = true
-    MBProgressHUD.showAdded(to: self.view, animated: true)
+    initTimer()
+
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock:{(results,totalPages) ->
       Void in
 
-      if let arr = results
+      if let tempArray = results
       {
-        //print(results!)
+        KVNProgress.dismiss()
         if let pages = totalPages {
-          print(pages)
           self.moviesTotalPages = pages
         }
         if self.loadingMoreAssets == false {
           if self.arrResults.count > 0 {
             self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
-
+          }
+          if tempArray.count == 0 {
+            KVNProgress.showError(withStatus: "No Movies found, Please try with different title")
           }
           self.arrResults.removeAll(keepingCapacity: false)
         }
 
         self.arrResults += results as! [AnyObject]
 
-        MBProgressHUD.hide(for: self.view, animated: false)
         self.moviesCollectionView.reloadData()
         self.fetchInProgress = false
       }
@@ -199,12 +217,7 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
 
 extension TMDBMoviesViewController: UICollectionViewDelegateFlowLayout {
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    let size: CGSize = CGSize(width: self.moviesCollectionView!.frame.size.width, height: 40)
-    return size
-  }
-
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
     return UIEdgeInsetsMake(0, self.spaceBetweenCells(), self.spaceBetweenCells(), self.spaceBetweenCells())
   }
 
