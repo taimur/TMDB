@@ -20,6 +20,7 @@ class TMDBMoviesViewController: UIViewController {
 
   //IBOutlets
   @IBOutlet weak var txtfSearch:UITextField!
+  @IBOutlet weak var lblfInfo:UILabel!
 
   fileprivate var arrResults:[AnyObject] = [AnyObject]()
   fileprivate var moviesTotalPages = ""
@@ -33,30 +34,29 @@ class TMDBMoviesViewController: UIViewController {
     // Do any additional setup after loading the view, typically from a nib.
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    //self.txtfSearch.text = "Batman"
-    //self.getMovies(withKeywords: "Batman", forPageNumber: "1")
+  override func viewWillAppear(_ animated: Bool) {
+
   }
   // MARK: USER_DEFINED_FUNCTIONS
 
   func setupView() {
 
-    self.layout.scrollDirection = UICollectionViewScrollDirection.vertical
-    self.layout.minimumInteritemSpacing = self.spaceBetweenCells()
-    self.layout.minimumLineSpacing = self.spaceBetweenCells()
-    self.layout.sectionInset =
-      UIEdgeInsetsMake(self.spaceBetweenCells(),
-                       self.spaceBetweenCells(),
-                       self.spaceBetweenCells(),
-                       self.spaceBetweenCells())
+    lblfInfo.isHidden = false
+    layout.scrollDirection = UICollectionViewScrollDirection.vertical
+    layout.minimumInteritemSpacing = spaceBetweenCells()
+    layout.minimumLineSpacing = spaceBetweenCells()
+    layout.sectionInset =
+      UIEdgeInsetsMake(spaceBetweenCells(),
+                       spaceBetweenCells(),
+                       spaceBetweenCells(),
+                       spaceBetweenCells())
 
-    self.moviesCollectionView.collectionViewLayout = layout
-    self.moviesCollectionView.backgroundColor = UIColor.clear
+    moviesCollectionView.collectionViewLayout = layout
+    moviesCollectionView.backgroundColor = UIColor.clear
 
     // Register cell classes
-
-    self.moviesCollectionView!.register(TMDBCataloguePosterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-    self.moviesCollectionView!.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier)
+    moviesCollectionView!.register(TMDBCataloguePosterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    moviesCollectionView!.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier)
   }
 
   internal func getMovies(withKeywords keywords:String, forPageNumber number:String)
@@ -73,8 +73,10 @@ class TMDBMoviesViewController: UIViewController {
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock:{(results,totalPages) ->
       Void in
 
-      if let tempArray = results
-      {
+      if let tempArray = results {
+        MBProgressHUD.hide(for: self.view, animated: true)
+        self.lblfInfo.isHidden = true
+
         if let pages = totalPages {
           self.moviesTotalPages = pages
         }
@@ -83,14 +85,13 @@ class TMDBMoviesViewController: UIViewController {
             self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
           }
           if tempArray.count == 0 {
+            self.lblfInfo.isHidden = false
             self.showAlert(withTitle: "Error!", andMessage: "No Movies found, Please try with different title")
           }
           self.arrResults.removeAll(keepingCapacity: false)
         }
 
         self.arrResults += results as! [AnyObject]
-        MBProgressHUD.hide(for: self.view, animated: true)
-        
         self.moviesCollectionView.reloadData()
         self.fetchInProgress = false
       }
@@ -98,6 +99,7 @@ class TMDBMoviesViewController: UIViewController {
       {
         // Show Alert Please try again
         self.fetchInProgress = false
+        MBProgressHUD.hide(for: self.view, animated: true)
         print()
     })
   }
