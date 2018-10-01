@@ -8,7 +8,6 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - STPopup (1.8.3)
   - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
@@ -16,7 +15,6 @@ DEPENDENCIES:
   - AlamofireObjectMapper (~> 5.0)
   - MBProgressHUD (~> 1.0.0)
   - SDWebImage (~> 3.8)
-  - STPopup
   - SwiftyJSON
 
 SPEC REPOS:
@@ -26,7 +24,6 @@ SPEC REPOS:
     - MBProgressHUD
     - ObjectMapper
     - SDWebImage
-    - STPopup
     - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -35,9 +32,8 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  STPopup: da1167250a01584af7bcccb898653185f223ec46
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: c8c330c7db541ac78f018fe076feb6d95a5d5beb
+PODFILE CHECKSUM: 8787db8be3f57d1f173dd2978c7f8d9018030eb6
 
 COCOAPODS: 1.5.3

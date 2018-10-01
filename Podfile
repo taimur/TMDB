@@ -11,7 +11,6 @@ target 'TMDB' do
    pod "SDWebImage", "~>3.8" # Asynchronus Image loading
    pod "MBProgressHUD", "~> 1.0.0" # Showing Loader view
    pod "SwiftyJSON" # Converting response into swift type
-   pod "STPopup" # PopOver for iPhone
    
   target 'TMDBTests' do
     inherit! :search_paths
