@@ -59,10 +59,14 @@ class TMDBCatalogueManager: NSObject {
 
 
   // MARK: APIs
-  func getMovies(withListType type:String, forPageNumber number:String, successBlock: @escaping (_ results: NSArray?, _ totalPage:String?) -> Void, failedBlock: @escaping () -> Void)
+  func getMovies(withKeywords text:String, forPageNumber number:String, successBlock: @escaping (_ results: NSArray?, _ totalPage:String?) -> Void, failedBlock: @escaping () -> Void)
   {
-    let parameters = "page=\(number)"
-    let endpoint = kEndPointMovies + type
+    //http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=batman&page=1
+    let query = "query=\(text)"
+    let page = "page=\(number)"
+    let parameters = query + "&" + "page"
+    
+    let endpoint = kEndPointMovies
     let urlString = self.generateURL(endpoint, parameters: parameters)
 
     Alamofire.request(urlString, method: .get, parameters: ["":""], encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
