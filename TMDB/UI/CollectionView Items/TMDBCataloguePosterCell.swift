@@ -103,45 +103,6 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     return "https://image.tmdb.org/t/p/"
   }
 
-  //MARK: Touch detection
-
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if let touch = touches.first as UITouch!
-    {
-      if touch.view == self.imageView {
-        self.animatedImageViewAlphaFade(0.7)
-      }
-    }
-    super.touchesBegan(touches , with:event)
-  }
-
-  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if let touch = touches.first as UITouch! {
-      if touch.view == self.imageView {
-        self.animatedImageViewAlphaFade(1.0)
-      }
-    }
-    super.touchesCancelled(touches , with:event)
-  }
-
-  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if let touch = touches.first as UITouch! {
-      if touch.view == self.imageView {
-        self.animatedImageViewAlphaFade(1.0)
-      }
-    }
-    super.touchesEnded(touches , with:event)
-  }
-
-  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if let touch = touches.first as UITouch! {
-      if touch.view == self.imageView {
-        self.animatedImageViewAlphaFade(0.7)
-      }
-    }
-    super.touchesMoved(touches , with:event)
-  }
-
   func animatedImageViewAlphaFade(_ alpha: CGFloat) {
     if self.animateTouch == false {
       return
