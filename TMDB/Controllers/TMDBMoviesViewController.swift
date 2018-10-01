@@ -50,6 +50,7 @@ class TMDBMoviesViewController: UIViewController {
 
   func setupView() {
 
+    self.hideKeyboardOnTap()
     lblfInfo.isHidden = false
     layout.scrollDirection = UICollectionViewScrollDirection.vertical
     layout.minimumInteritemSpacing = spaceBetweenCells()
@@ -162,10 +163,11 @@ class TMDBMoviesViewController: UIViewController {
     var items = [String]()
     for keywords in suggestedKeywords {
       if let value = keywords.value(forKeyPath: DB_ATTRIBUTES) as? String  {
-        items.append(value)
+        items.insert(value, at: 0)
       }
     }
-
+    items = items.removeDuplicates()
+    
     controller = SuggestedValuesTVC(items) { (name) in
       self.txtfSearch.text = name
       self.getMovies(withKeywords: name, forPageNumber: self.currPageNumber)
@@ -330,12 +332,16 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
     return true
   }
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    self.controller.dismiss(animated: true, completion: nil)
+    if let _ = self.controller {
+      self.controller.dismiss(animated: true, completion: nil)
+    }
     return true
   }
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = textField.text {
-      self.controller.dismiss(animated: true, completion: nil)
+      if let _ = self.controller {
+        self.controller.dismiss(animated: true, completion: nil)
+      }
       self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
     }
     return true
