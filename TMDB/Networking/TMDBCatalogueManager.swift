@@ -55,15 +55,21 @@ class TMDBCatalogueManager: NSObject {
 
 
   // MARK: APIs
+
+  // Get Movies with Search Query
   func getMovies(withKeywords text:String, forPageNumber number:String, successBlock: @escaping (_ results: NSArray?, _ totalPage:String?) -> Void, failedBlock: @escaping () -> Void)
   {
     //http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=batman&page=1
     let query = "query=\(text)"
     let page = "page=\(number)"
     let parameters = query + "&" + page
-    
+
     let endpoint = kSearch + kEndPointMovies
-    let urlString = self.generateURL(endpoint, parameters: parameters)
+    var urlString = self.generateURL(endpoint, parameters: parameters)
+
+    if let str = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) {
+      urlString = str
+    }
 
     Alamofire.request(urlString, method: .get, parameters: ["":""], encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
 
@@ -82,15 +88,14 @@ class TMDBCatalogueManager: NSObject {
           if let resData = swiftyJsonVar["results"].arrayObject {
 
             for item in resData {
-              let object = Mapper<TMDBMovieObject>().map(JSONObject: item)
-              results.add(object!)
+              if let object = Mapper<TMDBMovieObject>().map(JSONObject: item) {
+                results.add(object)
+              }
 
             }
             successBlock(results as NSArray, totalPages)
           }
-
         }
-
         break
       case .failure(_):
         if let error = response.result.error {
@@ -101,6 +106,7 @@ class TMDBCatalogueManager: NSObject {
     }
   }
 
+  // Fetch Movie Details
   func getMovieDetails(withMovieId id:String, successBlock: @escaping (_ movieObject: TMDBMovieDetailsObject?) -> Void, failedBlock: @escaping () -> Void) {
     let parameters = ""
     let endpoint = kEndPointMovies + self.backSlash + id
