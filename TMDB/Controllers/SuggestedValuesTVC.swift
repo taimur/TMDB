@@ -25,7 +25,7 @@ public class SuggestedValuesTVC: UITableViewController {
   }
 
   override public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10 // First 10 has to be shown only
+    return values.count <= 10 ? values.count: 10 // First 10 has to be shown only
   }
 
   override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
