@@ -128,11 +128,11 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
       }
       self.arrResults.removeAll(keepingCapacity: false)
     }
-    // Save only for the fist time - not in case of loading more assets in pagination
-    // Save successful queries only
+
+    // Save values for the fist time - not in case of loading more assets in pagination
 
     if let text = self.txtfSearch.text {
-      if results.count > 0 && loadingMoreAssets == false {
+      if results.count > 0 && loadingMoreAssets == false { // Save successful queries only
         if let keywords = self.presenter?.saveData(keyword: text) {
           if keywords.count > 0 {
             self.suggestedKeywords = keywords
@@ -147,6 +147,7 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
 
   func updateViewOnFailToLoad() {
     self.fetchInProgress = false
+    self.moviesCollectionView.reloadData()
   }
 
   func showMovieDetails(movieDetailVC: TMDBMovieDetailsViewController) {
