@@ -15,8 +15,8 @@ Before build the project please run a `pod install`
 
 ## Dependencies
 
-Alamofire, to make request from API
-
-SDWebImage, to get images from server
-
-MBProgressHUD, to show a progress while the data is loading
+ - *Alamofire*: Making API calls & communicating with server
+ - *AlamofireObjectMapper*: Mapping Response into Objects
+ - *SwiftLint*: Linter used to maintain coding style and patterns
+ - *SDWebImage*: Easy assync image loader and provides cache
+ - *Reachability*: Internet Concection checker
