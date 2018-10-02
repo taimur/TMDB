@@ -12,6 +12,8 @@ target 'TMDB' do
    pod "SDWebImage", "~>3.8" # Asynchronus Image loading
    pod "MBProgressHUD", "~> 1.0.0" # Showing Loader view
    pod "SwiftyJSON" # Converting response into swift type
+   pod "SwiftLint" # Linter used to maintain coding style and patterns
+   pod "MarqueeLabel" # Scrolling wide labels
    
   target 'TMDBTests' do
     inherit! :search_paths
