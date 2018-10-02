@@ -6,7 +6,7 @@ Test Application developed using [TMDb API](https://developers.themoviedb.org)
 
  - Xcode 9
  - Swift 4
- - Cocoapods 1.3.1
+ - Cocoapods 1.5.3
  - Carthage
 
 ## Before Build
@@ -17,6 +17,8 @@ Before build the project please run a `pod install`
 
  - *Alamofire*: Making API calls & communicating with server
  - *AlamofireObjectMapper*: Mapping Response into Objects
- - *SwiftLint*: Linter used to maintain coding style and patterns
  - *SDWebImage*: Easy assync image loader and provides cache
+ - *MBProgressHUD*: Display loading animations
+ - *SwiftyJSON*: Converting response into swift type
  - *Reachability*: Internet Concection checker
+ - *SwiftLint*: Linter used to maintain coding style and patterns
