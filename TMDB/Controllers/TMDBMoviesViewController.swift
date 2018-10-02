@@ -140,7 +140,7 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
         }
       }
     }
-    self.arrResults += results as! [AnyObject]
+    self.arrResults += results as [AnyObject]
     self.moviesCollectionView.reloadData()
     self.fetchInProgress = false
   }
