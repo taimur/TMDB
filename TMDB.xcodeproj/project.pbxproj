@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B3C0B96EE190EBD1C8101B3 /* Pods_TMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C5EC25951A715F5EDC09D5 /* Pods_TMDB.framework */; };
 		1D272C064FD6D15C145F494B /* Pods_TMDBTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF670EE702A0FB6709F2EF86 /* Pods_TMDBTests.framework */; };
+		9C652FB52163ECE600DD4791 /* movieSearchResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C652FB42163ECE600DD4791 /* movieSearchResponse.json */; };
 		9CC365D4215F7A34001D7BDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC365D3215F7A34001D7BDD /* AppDelegate.swift */; };
 		9CC365D6215F7A34001D7BDD /* TMDBMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC365D5215F7A34001D7BDD /* TMDBMoviesViewController.swift */; };
 		9CC365D9215F7A34001D7BDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC365D7215F7A34001D7BDD /* Main.storyboard */; };
@@ -19,7 +20,6 @@
 		9CC365F7215F7A36001D7BDD /* TMDBUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC365F6215F7A36001D7BDD /* TMDBUITests.swift */; };
 		9CC3660D2160FD8D001D7BDD /* TMDBCataloguePosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC3660C2160FD8D001D7BDD /* TMDBCataloguePosterCell.swift */; };
 		9CC3660F2160FDFB001D7BDD /* TMDBMovieObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC3660E2160FDFB001D7BDD /* TMDBMovieObject.swift */; };
-		9CC366122160FFE6001D7BDD /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC366112160FFE6001D7BDD /* MarqueeLabel.swift */; };
 		9CC36615216100F5001D7BDD /* TMDBUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC36614216100F5001D7BDD /* TMDBUtilities.swift */; };
 		9CC3661921610507001D7BDD /* TMDBCatalogueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC3661821610507001D7BDD /* TMDBCatalogueManager.swift */; };
 		9CC3661B216105FC001D7BDD /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC3661A216105FC001D7BDD /* APIKeys.swift */; };
@@ -59,6 +59,7 @@
 		2D708326D7B75323B2ADCB40 /* Pods_TMDBUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TMDBUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFF5361C261E07CFE5C4201 /* Pods-TMDBUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDBUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMDBUITests/Pods-TMDBUITests.release.xcconfig"; sourceTree = "<group>"; };
 		71BCCD472746FDB499320D84 /* Pods-TMDBTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDBTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMDBTests/Pods-TMDBTests.release.xcconfig"; sourceTree = "<group>"; };
+		9C652FB42163ECE600DD4791 /* movieSearchResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = movieSearchResponse.json; sourceTree = "<group>"; };
 		9CC365D0215F7A34001D7BDD /* TMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC365D3215F7A34001D7BDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CC365D5215F7A34001D7BDD /* TMDBMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBMoviesViewController.swift; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		9CC365F8215F7A36001D7BDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CC3660C2160FD8D001D7BDD /* TMDBCataloguePosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBCataloguePosterCell.swift; sourceTree = "<group>"; };
 		9CC3660E2160FDFB001D7BDD /* TMDBMovieObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBMovieObject.swift; sourceTree = "<group>"; };
-		9CC366112160FFE6001D7BDD /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		9CC36614216100F5001D7BDD /* TMDBUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBUtilities.swift; sourceTree = "<group>"; };
 		9CC3661821610507001D7BDD /* TMDBCatalogueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBCatalogueManager.swift; sourceTree = "<group>"; };
 		9CC3661A216105FC001D7BDD /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
@@ -144,6 +144,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9C652FB22163D13D00DD4791 /* MockClasses */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MockClasses;
+			sourceTree = "<group>";
+		};
+		9C652FB32163D23400DD4791 /* Mock Response */ = {
+			isa = PBXGroup;
+			children = (
+				9C652FB42163ECE600DD4791 /* movieSearchResponse.json */,
+			);
+			path = "Mock Response";
+			sourceTree = "<group>";
+		};
 		9CC365C7215F7A34001D7BDD = {
 			isa = PBXGroup;
 			children = (
@@ -176,7 +191,6 @@
 				9CC366072160DDAD001D7BDD /* Networking */,
 				9CC366312162D542001D7BDD /* Extensions */,
 				9CC366092160DDC7001D7BDD /* Models */,
-				9CC3660A2160DE7B001D7BDD /* External */,
 				9CC36613216100B5001D7BDD /* Common */,
 				9CC365DD215F7A36001D7BDD /* Assets.xcassets */,
 				9CC365E2215F7A36001D7BDD /* Info.plist */,
@@ -188,6 +202,8 @@
 		9CC365EA215F7A36001D7BDD /* TMDBTests */ = {
 			isa = PBXGroup;
 			children = (
+				9C652FB32163D23400DD4791 /* Mock Response */,
+				9C652FB22163D13D00DD4791 /* MockClasses */,
 				9CC365EB215F7A36001D7BDD /* TMDBTests.swift */,
 				9CC365ED215F7A36001D7BDD /* Info.plist */,
 			);
@@ -250,28 +266,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		9CC3660A2160DE7B001D7BDD /* External */ = {
-			isa = PBXGroup;
-			children = (
-				9CC366102160FFD7001D7BDD /* MarqueeLabel */,
-			);
-			path = External;
-			sourceTree = "<group>";
-		};
 		9CC3660B2160FD5C001D7BDD /* CollectionView Items */ = {
 			isa = PBXGroup;
 			children = (
 				9CC3660C2160FD8D001D7BDD /* TMDBCataloguePosterCell.swift */,
 			);
 			path = "CollectionView Items";
-			sourceTree = "<group>";
-		};
-		9CC366102160FFD7001D7BDD /* MarqueeLabel */ = {
-			isa = PBXGroup;
-			children = (
-				9CC366112160FFE6001D7BDD /* MarqueeLabel.swift */,
-			);
-			path = MarqueeLabel;
 			sourceTree = "<group>";
 		};
 		9CC36613216100B5001D7BDD /* Common */ = {
@@ -313,6 +313,7 @@
 				9CC365CD215F7A34001D7BDD /* Frameworks */,
 				9CC365CE215F7A34001D7BDD /* Resources */,
 				6A95D894353739513AB85B95 /* [CP] Embed Pods Frameworks */,
+				9C839C0421642A2A00D7EC41 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -331,6 +332,7 @@
 				9CC365E3215F7A36001D7BDD /* Sources */,
 				9CC365E4215F7A36001D7BDD /* Frameworks */,
 				9CC365E5215F7A36001D7BDD /* Resources */,
+				A729159F821988A172ED32DF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -420,6 +422,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C652FB52163ECE600DD4791 /* movieSearchResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +446,8 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -452,6 +457,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -459,6 +466,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMDB/Pods-TMDB-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C839C0421642A2A00D7EC41 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelseecho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		A729159F821988A172ED32DF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TMDBTests/Pods-TMDBTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMDBTests/Pods-TMDBTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AED0E09227A444A74F3D299D /* [CP] Check Pods Manifest.lock */ = {
@@ -533,7 +574,6 @@
 				9CC3663A2162F031001D7BDD /* TMDBMoviesPresenter.swift in Sources */,
 				9CC366202161FF82001D7BDD /* TMDBMovieDetailsObject.swift in Sources */,
 				9CC3661B216105FC001D7BDD /* APIKeys.swift in Sources */,
-				9CC366122160FFE6001D7BDD /* MarqueeLabel.swift in Sources */,
 				9CC365DC215F7A34001D7BDD /* TMDB.xcdatamodeld in Sources */,
 				9CC365D4215F7A34001D7BDD /* AppDelegate.swift in Sources */,
 				9CC366352162D735001D7BDD /* Array+RemoveDuplicates.swift in Sources */,
@@ -712,15 +752,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A417CAFC5BCC0C22AE541A6D /* Pods-TMDB.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZBPP83795K;
 				INFOPLIST_FILE = TMDB/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.careem..TMDB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -733,15 +771,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE7B62F28684D8E1660F0503 /* Pods-TMDB.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZBPP83795K;
 				INFOPLIST_FILE = TMDB/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.careem..TMDB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -753,16 +789,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07376969E412454DB1D89AC7 /* Pods-TMDBTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZBPP83795K;
 				INFOPLIST_FILE = TMDBTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.careem..TMDBTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -775,16 +807,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 71BCCD472746FDB499320D84 /* Pods-TMDBTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZBPP83795K;
 				INFOPLIST_FILE = TMDBTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.careem..TMDBTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -801,11 +829,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZBPP83795K;
 				INFOPLIST_FILE = TMDBUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.careem..TMDBUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -822,11 +846,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZBPP83795K;
 				INFOPLIST_FILE = TMDBUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.careem..TMDBUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

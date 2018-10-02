@@ -28,7 +28,7 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     var controller: SuggestedValuesTVC! // Tableview For PopUp
     var items = [String]()
     for keywords in suggested {
-      if let value = keywords.value(forKeyPath: DB_ATTRIBUTES) as? String  {
+      if let value = keywords.value(forKeyPath: dbAttributes) as? String {
         items.insert(value, at: 0)
       }
     }
@@ -49,10 +49,9 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     return controller
   }
 
-
   public func getMovies(withKeywords keywords: String, forPageNumber number: String) {
     view?.showLoading()
-    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock:{(results,totalPages) ->
+    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock: {(results, totalPages) ->
       Void in
 
       if let res = results, let pages = totalPages {
@@ -63,7 +62,7 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     }, failedBlock: {
         self.view?.hideLoading()
         self.view?.updateViewOnFailToLoad()
-        self.view?.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
+        self.view?.showAlert(withTitle: errorTitle, andMessage: generalErrorDesc)
       })
   }
   public func getMovieDetails(withid movieID: String) {
@@ -72,15 +71,14 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: String(movieID), successBlock: {(movieDetailsObject) ->
       Void in
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let movieDetailVC = storyboard.instantiateViewController(withIdentifier: "movieDetails") as! TMDBMovieDetailsViewController
-        movieDetailVC.movieDetailsObject = movieDetailsObject
-
+      if let movieDetailVC = storyboard.instantiateViewController(withIdentifier: "movieDetails") as? TMDBMovieDetailsViewController {
+          movieDetailVC.movieDetailsObject = movieDetailsObject
+          self.view?.hideLoading()
+          self.view?.showMovieDetails(movieDetailVC: movieDetailVC)
+        }
+      }, failedBlock: {
         self.view?.hideLoading()
-        self.view?.showMovieDetails(movieDetailVC: movieDetailVC)
-      }
-      ,failedBlock:{
-        self.view?.hideLoading()
-        self.view?.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
+        self.view?.showAlert(withTitle: errorTitle, andMessage: generalErrorDesc)
       })
   }
 
@@ -92,13 +90,13 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entity = NSEntityDescription.entity(forEntityName: DB_ENTITY,
+    let entity = NSEntityDescription.entity(forEntityName: dbEntity,
                                             in: managedContext)!
 
     let keywords = NSManagedObject(entity: entity,
                                    insertInto: managedContext)
 
-    keywords.setValue(keyword, forKeyPath: DB_ATTRIBUTES)
+    keywords.setValue(keyword, forKeyPath: dbAttributes)
 
     do {
       try managedContext.save()
@@ -117,7 +115,7 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     }
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: DB_ENTITY)
+    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: dbEntity)
 
     do {
       suggestedKeywords = try managedContext.fetch(fetchRequest)
@@ -151,7 +149,7 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
   }
 
   public func noDataFoundForKeyword(keyword: String) {
-    view?.showAlert(withTitle: ERROR_TITLE, andMessage: NO_MOVIE_FOUND + "'\(keyword)'")
+    view?.showAlert(withTitle: errorTitle, andMessage: noMovieFound + "'\(keyword)'")
 
   }
   public func dismissPopOver() {

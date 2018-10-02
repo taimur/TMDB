@@ -9,11 +9,11 @@ public class SuggestedValuesTVC: UITableViewController {
   typealias SelectionHandler = (String) -> Void
   typealias LabelProvider = (String) -> String
 
-  private let values : [String]
-  private let labels : LabelProvider
-  private let onSelect : SelectionHandler?
+  private let values: [String]
+  private let labels: LabelProvider
+  private let onSelect: SelectionHandler?
 
-  init(_ values : [String], labels : @escaping LabelProvider = String.init(describing:), onSelect : SelectionHandler? = nil) {
+  init(_ values: [String], labels : @escaping LabelProvider = String.init(describing:), onSelect: SelectionHandler? = nil) {
     self.values = values
     self.onSelect = onSelect
     self.labels = labels

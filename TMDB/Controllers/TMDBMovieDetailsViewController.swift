@@ -10,21 +10,20 @@ import UIKit
 
 class TMDBMovieDetailsViewController: UIViewController {
 
-  var movieDetailsObject:TMDBMovieDetailsObject!
+  var movieDetailsObject: TMDBMovieDetailsObject!
 
-  @IBOutlet weak var imgPoster:UIImageView!
-  @IBOutlet weak var imgBackdrop:UIImageView!
-  @IBOutlet weak var lblMovieTitle:UILabel!
-  @IBOutlet weak var lblSpokenLanguages:UILabel!
-  @IBOutlet weak var lblYear:UILabel!
+  @IBOutlet weak var imgPoster: UIImageView!
+  @IBOutlet weak var imgBackdrop: UIImageView!
+  @IBOutlet weak var lblMovieTitle: UILabel!
+  @IBOutlet weak var lblSpokenLanguages: UILabel!
+  @IBOutlet weak var lblYear: UILabel!
 
-  @IBOutlet weak var lblGenres:UILabel!
-  @IBOutlet weak var lblProductionCompanies:UILabel!
+  @IBOutlet weak var lblGenres: UILabel!
+  @IBOutlet weak var lblProductionCompanies: UILabel!
 
-  @IBOutlet weak var lblTagline:UILabel!
+  @IBOutlet weak var lblTagline: UILabel!
 
-
-  @IBOutlet weak var txtvOverview:UITextView!
+  @IBOutlet weak var txtvOverview: UITextView!
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -33,8 +32,7 @@ class TMDBMovieDetailsViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     self.setupView()
   }
-  func setupView()
-  {
+  func setupView() {
     // Title
     self.lblMovieTitle.text = self.movieDetailsObject.title
 
@@ -45,13 +43,12 @@ class TMDBMovieDetailsViewController: UIViewController {
     self.lblTagline.text = self.movieDetailsObject.tagline
 
     //Release Year
-    let dateString = self.movieDetailsObject.release_date
+    let dateString = self.movieDetailsObject.releaseDate
 
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
 
-    if dateString?.isEmpty == false
-    {
+    if dateString?.isEmpty == false {
       let date = dateFormatter.date(from: dateString!)
       dateFormatter.dateFormat = "yyyy"
 
@@ -63,33 +60,29 @@ class TMDBMovieDetailsViewController: UIViewController {
     //Genres
     let arrGenres = NSMutableArray()
 
-    arrGenres.addObjects(from: (self.movieDetailsObject.genres as NSArray).value(forKeyPath: "name") as! [Any])
+    arrGenres.addObjects(from: ((self.movieDetailsObject.genres as NSArray).value(forKeyPath: "name") as? [Any])!)
     self.lblGenres.text = String(arrGenres.componentsJoined(by: " | "))
 
     //Spoken Languages
     let arrSpokenLanguages = NSMutableArray()
 
-    arrSpokenLanguages.addObjects(from: (self.movieDetailsObject.spoken_languages as NSArray).value(forKeyPath: "name") as! [Any])
+    arrSpokenLanguages.addObjects(from: ((self.movieDetailsObject.spokenLanguages as NSArray).value(forKeyPath: "name") as? [Any])!)
     self.lblSpokenLanguages.text = String(arrSpokenLanguages.componentsJoined(by: " , "))
 
     //SpokenLanguages
     let arrProductionCompanies = NSMutableArray()
 
-    arrProductionCompanies.addObjects(from: (self.movieDetailsObject.production_companies as NSArray).value(forKeyPath: "name") as! [Any])
+    arrProductionCompanies.addObjects(from: ((self.movieDetailsObject.productionCompanies as NSArray).value(forKeyPath: "name") as? [Any])!)
     self.lblProductionCompanies.text = self.lblProductionCompanies.text! + "\n" + String(arrProductionCompanies.componentsJoined(by: " , "))
 
     // Poster Image
 
-    if let _ = movieDetailsObject.poster_path
-    {
-      let tempPosterURLString = TMDBUtilities().generateImageLink(withURLString: movieDetailsObject.poster_path!)
+    if movieDetailsObject.posterPath != nil {
+      let tempPosterURLString = TMDBUtilities().generateImageLink(withURLString: movieDetailsObject.posterPath!)
 
-
-      self.imgPoster.sd_setImage(with: URL(string:tempPosterURLString), placeholderImage: nil,
-                                 options: [])
-      { (image, error, imageCacheType, imageUrl) in
-        if image != nil
-        {
+      self.imgPoster.sd_setImage(with: URL(string: tempPosterURLString), placeholderImage: nil,
+                                 options: []) { (image, _, _, _) in
+        if image != nil {
           self.imgPoster.image = image
           //self.imageViewContentMode = UIViewContentMode.scaleToFill
         }
@@ -97,15 +90,12 @@ class TMDBMovieDetailsViewController: UIViewController {
     }
 
     // Backdrop Image
-    if let _ = movieDetailsObject.backdrop_path
-    {
-      let tempImgBD = TMDBUtilities().generateImageLink(withURLString: movieDetailsObject.backdrop_path!)
+    if movieDetailsObject.backdropPath != nil {
+      let tempImgBD = TMDBUtilities().generateImageLink(withURLString: movieDetailsObject.backdropPath!)
 
-      self.imgBackdrop.sd_setImage(with: URL(string:tempImgBD), placeholderImage: nil,
-                                   options: [])
-      { (image, error, imageCacheType, imageUrl) in
-        if image != nil
-        {
+      self.imgBackdrop.sd_setImage(with: URL(string: tempImgBD), placeholderImage: nil,
+                                   options: []) { (image, _, _, _) in
+        if image != nil {
 
           self.imgBackdrop.image = image
           self.imgBackdrop.alpha = 0.0
@@ -118,8 +108,7 @@ class TMDBMovieDetailsViewController: UIViewController {
       }
     }
   }
-  @IBAction func dimissView()
-  {
+  @IBAction func dimissView() {
     self.dismiss(animated: true, completion: nil)
   }
   override func didReceiveMemoryWarning() {

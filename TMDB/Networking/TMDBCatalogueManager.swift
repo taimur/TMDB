@@ -23,15 +23,14 @@ class TMDBCatalogueManager: NSObject {
     static var token: Int = 0
   }
 
-  fileprivate static var __once: () = {
+  fileprivate static var once: () = {
     Static.instance = TMDBCatalogueManager()
 
   }()
 
   class var sharedInstance: TMDBCatalogueManager {
 
-
-    _ = TMDBCatalogueManager.__once
+    _ = TMDBCatalogueManager.once
 
     return Static.instance!
   }
@@ -42,23 +41,21 @@ class TMDBCatalogueManager: NSObject {
   }
 
   func appendAPIKey() -> String {
-    return "?api_key=\(tmdb_authkey)"
+    return "?api_key=\(authKey)"
   }
 
-  func appendParameters(parameters:String) ->String {
+  func appendParameters(parameters: String) -> String {
     return parameters == "" ? "":self.andSign + parameters
   }
 
-  func generateURL(_ endPoint:String,parameters:String) -> String {
+  func generateURL(_ endPoint: String, parameters: String) -> String {
     return self.baseURL() + endPoint + self.appendAPIKey() + self.appendParameters(parameters: parameters)
   }
-
 
   // MARK: APIs
 
   // Get Movies with Search Query
-  func getMovies(withKeywords text:String, forPageNumber number:String, successBlock: @escaping (_ results: NSArray?, _ totalPage:String?) -> Void, failedBlock: @escaping () -> Void)
-  {
+  func getMovies(withKeywords text: String, forPageNumber number: String, successBlock: @escaping (_ results: NSArray?, _ totalPage: String?) -> Void, failedBlock: @escaping () -> Void) {
     //http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=batman&page=1
     let query = "query=\(text)"
     let page = "page=\(number)"
@@ -71,12 +68,12 @@ class TMDBCatalogueManager: NSObject {
       urlString = str
     }
 
-    Alamofire.request(urlString, method: .get, parameters: ["":""], encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
+    Alamofire.request(urlString, method: .get, parameters: ["": ""], encoding: URLEncoding.default, headers: nil).responseJSON { (response: DataResponse<Any>) in
 
-      switch(response.result) {
-      case .success(_):
+      switch response.result {
+      case .success:
         let results = NSMutableArray()
-        if((response.result.value) != nil) {
+        if response.result.value != nil {
           let swiftyJsonVar = JSON(response.result.value!)
 
           var totalPages = ""
@@ -96,28 +93,26 @@ class TMDBCatalogueManager: NSObject {
             successBlock(results as NSArray, totalPages)
           }
         }
-        break
-      case .failure(_):
+      case .failure:
         if let error = response.result.error {
           print(error)
         }
-        break
       }
     }
   }
 
   // Fetch Movie Details
-  func getMovieDetails(withMovieId id:String, successBlock: @escaping (_ movieObject: TMDBMovieDetailsObject?) -> Void, failedBlock: @escaping () -> Void) {
+  func getMovieDetails(withMovieId id: String, successBlock: @escaping (_ movieObject: TMDBMovieDetailsObject?) -> Void, failedBlock: @escaping () -> Void) {
     let parameters = ""
     let endpoint = kEndPointMovies + self.backSlash + id
     let urlString = self.generateURL(endpoint, parameters: parameters)
 
-    Alamofire.request(urlString, method: .get, parameters: ["":""], encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
+    Alamofire.request(urlString, method: .get, parameters: ["": ""], encoding: URLEncoding.default, headers: nil).responseJSON { (response: DataResponse<Any>) in
 
-      switch(response.result) {
-      case .success(_):
+      switch response.result {
+      case .success:
         let results = NSMutableArray()
-        if((response.result.value) != nil) {
+        if response.result.value != nil {
           let swiftyJsonVar = JSON(response.result.value!)
 
           if let item = swiftyJsonVar.dictionaryObject {
@@ -129,16 +124,12 @@ class TMDBCatalogueManager: NSObject {
           }
 
         }
-
-        break
-
-      case .failure(_):
+      case .failure:
         if let error = response.result.error {
           print(error)
         }
-        break
-
       }
     }
   }
+
 }

@@ -10,14 +10,12 @@ import UIKit
 
 class TMDBUtilities: NSObject {
 
-  var baseURL:String = "https://image.tmdb.org/t/p/"
+  var baseURL: String = "https://image.tmdb.org/t/p/"
 
-  func generateImageLink(withURLString url:String) -> String
-  {
+  func generateImageLink(withURLString url: String) -> String {
     var width = "w300" // for iPhone
 
-    if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
-    {
+    if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
       width = "w500" //iPad
     }
 

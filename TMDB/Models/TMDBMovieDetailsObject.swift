@@ -9,113 +9,111 @@
 import UIKit
 import ObjectMapper
 
-class TMDBMovieDetailsObject:Mappable {
-  
+class TMDBMovieDetailsObject: Mappable {
+
   var adult: Bool
-  var backdrop_path:String?
-  var belongs_to_collection:Bool?
-  var budget:Int?
-  var genres:Array<AnyObject>
-  var homepage:String?
+  var backdropPath: String?
+  var belongsToCollection: Bool?
+  var budget: Int?
+  var genres: [AnyObject]!
+  var homepage: String?
 
-  var id:Int?
-  var imdb_id:Int?
-  var original_language:String?
-  var original_title:String?
-  var overview:String?
-  var popularity:Float?
-  var poster_path:String?
+  var id: Int?
+  var imdbID: Int?
+  var originalLanguage: String?
+  var originalTitle: String?
+  var overview: String?
+  var popularity: Float?
+  var posterPath: String?
 
-  var production_companies:Array<AnyObject>!
-  var production_countries:Array<AnyObject>!
+  var productionCompanies: [AnyObject]!
+  var productionCountries: [AnyObject]!
 
-  var release_date:String?
+  var releaseDate: String?
 
   var revenue: Int?
-  var runtime:Int?
-  var spoken_languages:Array<AnyObject>!
+  var runtime: Int?
+  var spokenLanguages: [AnyObject]!
 
-  var status:String?
-  var tagline:String?
+  var status: String?
+  var tagline: String?
 
-  var title:String?
-  var video:Bool?
-  var vote_average: Float?
-  var vote_count:Int?
+  var title: String?
+  var video: Bool?
+  var voteAverage: Float?
+  var voteCount: Int?
 
   required convenience init?(map: Map) {
     self.init()
   }
 
-  init()
-  {
+  init() {
     adult = false
-    backdrop_path = ""
-    belongs_to_collection = false
+    backdropPath = ""
+    belongsToCollection = false
     budget = -1
     genres = [AnyObject]()
     homepage = ""
 
     id = -1
-    imdb_id = -1
-    original_language = ""
-    original_title = ""
+    imdbID = -1
+    originalLanguage = ""
+    originalTitle = ""
     overview = ""
     popularity = 0.0
-    poster_path = ""
+    posterPath = ""
 
-    production_companies = Array()
-    production_countries = Array()
+    productionCompanies = Array()
+    productionCountries = Array()
 
-    release_date = ""
+    releaseDate = ""
 
     revenue = -1
     runtime = -1
-    spoken_languages = Array()
+    spokenLanguages = Array()
 
     status = ""
     tagline = ""
 
     title = ""
     video = false
-    vote_average = 0.0
-    vote_count = -1
+    voteAverage = 0.0
+    voteCount = -1
 
   }
   func mapping(map: Map) {
 
-    poster_path             <- map["poster_path"]
+    posterPath             <- map["poster_path"]
     adult                   <- map["adult"]
-    backdrop_path           <- map["backdrop_path"]
-    belongs_to_collection   <- map["belongs_to_collection"]
+    backdropPath           <- map["backdrop_path"]
+    belongsToCollection   <- map["belongs_to_collection"]
     budget                  <- map["budget"]
     genres                  <- map["genres"]
     homepage                <- map["homepage"]
 
     id                      <- map["id"]
-    imdb_id                 <- map["imdb_id"]
-    original_language       <- map["original_language"]
-    original_title          <- map["original_title"]
+    imdbID                 <- map["imdb_id"]
+    originalLanguage       <- map["original_language"]
+    originalTitle          <- map["original_title"]
     overview                <- map["overview"]
     popularity              <- map["popularity"]
-    poster_path             <- map["poster_path"]
+    posterPath             <- map["poster_path"]
 
-    production_companies    <- map["production_companies"]
-    production_countries    <- map["production_countries"]
+    productionCompanies    <- map["production_companies"]
+    productionCountries    <- map["production_countries"]
 
-    release_date            <- map["release_date"]
+    releaseDate            <- map["release_date"]
 
     revenue                 <- map["revenue"]
     runtime                 <- map["runtime"]
-    spoken_languages        <- map["spoken_languages"]
+    spokenLanguages        <- map["spoken_languages"]
 
     status                  <- map["status"]
     tagline                 <- map["tagline"]
 
     title                   <- map["title"]
     video                   <- map["video"]
-    vote_average            <- map["vote_average"]
-    vote_count              <- map["vote_count"]
+    voteAverage            <- map["vote_average"]
+    voteCount              <- map["vote_count"]
   }
 }
-

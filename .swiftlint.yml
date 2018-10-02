@@ -1,0 +1,26 @@
+disabled_rules:
+  - todo
+
+line_length:
+  error: 1500
+  warning: 1500
+
+type_name:
+  max_length:
+    error: 50
+  min_length:
+    error: 0
+    warning: 0
+
+variable_name:
+  max_length:
+    error: 50
+  min_length:
+    error: 0
+    warning: 0
+
+nesting:
+    type_level: 3
+
+excluded:
+  - Pods

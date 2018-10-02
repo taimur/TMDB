@@ -8,11 +8,10 @@
 
 import Foundation
 
-let ERROR_TITLE = "Error!"
+let errorTitle = "Error!"
 
-let GENERAL_ERROR_DESC = "Something went wrong!, Please try agian"
-let NO_MOVIE_FOUND = "No Movies found for "
+let generalErrorDesc = "Something went wrong!, Please try agian"
+let noMovieFound = "No Movies found for "
 
-let DB_ENTITY = "SuggestedKeywords"
-let DB_ATTRIBUTES = "keywords"
-
+let dbEntity = "SuggestedKeywords"
+let dbAttributes = "keywords"
