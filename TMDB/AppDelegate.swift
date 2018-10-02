@@ -16,7 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
+
+    self.window = UIWindow(frame: UIScreen.main.bounds)
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+    if let controller = storyboard.instantiateInitialViewController() as? TMDBMoviesViewController {
+
+      let presenter = TMDBMoviesPresenter()
+      presenter.view = controller as TMDBMoviesViewProtocol
+      controller.presenter = presenter as TMDBMoviesPresenterProtocol
+
+      self.window?.rootViewController = controller
+      self.window?.makeKeyAndVisible()
+    }
     return true
   }
 
