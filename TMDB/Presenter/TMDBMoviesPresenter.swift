@@ -21,7 +21,6 @@ public class TMDBMoviesPresenter: NSObject {
   weak var delegate: TMDBMoviesDelegate?
   let context: TMDBMoviesContext
 
-
   init(context: TMDBMoviesContext,
        delegate: TMDBMoviesDelegate? = nil) {
     self.context = context
@@ -31,6 +30,31 @@ public class TMDBMoviesPresenter: NSObject {
 }
 
 extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
+  public func onPopUpInvoked(withView txtfView: UITextField, withKeywords suggested: [NSManagedObject], andCurrentPageNo pageNo: String) -> SuggestedValuesTVC {
+
+    var controller: SuggestedValuesTVC! // Tableview For PopUp
+    var items = [String]()
+    for keywords in suggested {
+      if let value = keywords.value(forKeyPath: DB_ATTRIBUTES) as? String  {
+        items.insert(value, at: 0)
+      }
+    }
+    items = items.removeDuplicates()
+
+    controller = SuggestedValuesTVC(items) { (keyword) in
+      self.view?.updateSearch(keyword: keyword)
+      self.getMovies(withKeywords: keyword, forPageNumber: pageNo)
+      self.dismissPopOver()
+    }
+    controller.preferredContentSize = CGSize(width: 300.0, height: 300.0)
+
+    let presentationController = PopOverPresenter.configurePresentation(forController: controller)
+    presentationController.sourceView = txtfView
+    presentationController.sourceRect = txtfView.bounds
+    presentationController.permittedArrowDirections = [.down, .up]
+    return controller
+  }
+
 
   public func getMovies(withKeywords keywords: String, forPageNumber number: String) {
     view?.showLoading()
@@ -45,6 +69,24 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     }, failedBlock: {
         self.view?.hideLoading()
         self.view?.updateViewOnFailToLoad()
+        self.view?.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
+      })
+  }
+  public func getMovieDetails(withid movieID: String) {
+
+    view?.showLoading()
+    TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: String(movieID), successBlock: {(movieDetailsObject) ->
+      Void in
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let movieDetailVC = storyboard.instantiateViewController(withIdentifier: "movieDetails") as! TMDBMovieDetailsViewController
+        movieDetailVC.movieDetailsObject = movieDetailsObject
+
+        self.view?.hideLoading()
+        self.view?.showMovieDetails(movieDetailVC: movieDetailVC)
+      }
+      ,failedBlock:{
+        self.view?.hideLoading()
+        self.view?.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
       })
   }
 
@@ -92,12 +134,8 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     return suggestedKeywords
   }
 
-  public func pushViewController(viewController: UIViewController) {
-
-  }
-
   public func onScreenloaded() {
-
+    view?.setupView()
   }
   public func showLoading() {
     view?.showLoading()
@@ -110,10 +148,18 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     view?.hideKeyboard()
   }
 
+  public func showPopUp() {
+    view?.showPopUp()
+  }
+
   public func setView(view: Any) {
 
   }
 
+  public func noDataFoundForKeyword(keyword: String) {
+    view?.showAlert(withTitle: ERROR_TITLE, andMessage: NO_MOVIE_FOUND + keyword)
+
+  }
   public func dismissPopOver() {
     view?.dismissPopOver()
   }

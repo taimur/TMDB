@@ -12,11 +12,13 @@ import CoreData
 
 class TMDBMoviesViewController: UIViewController {
 
+  typealias T = TMDBMoviesPresenterProtocol
+  var presenter: T?
+
   //Collection View Items
   let minimumRowItemObjectsInRow = 3
   let reuseIdentifier = "cellIdentifier"
   let headerIdentifier = "headerIdentifier"
-
   @IBOutlet weak var moviesCollectionView:UICollectionView!
   private let layout = UICollectionViewFlowLayout()
 
@@ -36,15 +38,17 @@ class TMDBMoviesViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.setupView()
+    presenter?.onScreenloaded()
     // Do any additional setup after loading the view, typically from a nib.
   }
 
   override func viewWillAppear(_ animated: Bool) {
-    fetch()
+    if let keywords = presenter?.fetchData() {
+      suggestedKeywords = keywords
+    }
   }
   // MARK: USER_DEFINED_FUNCTIONS
-  @objc func didTapView() {
+  func didTapView() {
     self.view.endEditing(true)
   }
 
@@ -71,51 +75,15 @@ class TMDBMoviesViewController: UIViewController {
 
   internal func getMovies(withKeywords keywords:String, forPageNumber number:String)
   {
-    self.view.endEditing(true)
+    self.hideKeyboard()
 
     if self.fetchInProgress == true {
       return
     }
 
     self.fetchInProgress = true
-    MBProgressHUD.showAdded(to: self.view, animated: true)
-    
-    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: keywords, forPageNumber: number, successBlock:{(results,totalPages) ->
-      Void in
+    presenter?.getMovies(withKeywords: keywords, forPageNumber: currPageNumber)
 
-      if let tempArray = results {
-        MBProgressHUD.hide(for: self.view, animated: true)
-        self.lblfInfo.isHidden = true
-
-        if let pages = totalPages {
-          self.moviesTotalPages = pages
-        }
-        if self.loadingMoreAssets == false {
-          if self.arrResults.count > 0 {
-            self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
-          }
-          if tempArray.count == 0 {
-            self.lblfInfo.isHidden = false
-            self.showAlert(withTitle: ERROR_TITLE, andMessage: NO_MOVIE_FOUND)
-            return
-          }
-          self.arrResults.removeAll(keepingCapacity: false)
-        }
-        if let text = self.txtfSearch.text {
-          self.save(keyword:text)
-        }
-        self.arrResults += results as! [AnyObject]
-        self.moviesCollectionView.reloadData()
-        self.fetchInProgress = false
-      }
-    }, failedBlock:
-      {
-        // Show Alert Please try again
-        self.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
-        self.fetchInProgress = false
-        MBProgressHUD.hide(for: self.view, animated: true)
-        print()
-    })
   }
 
   override func didReceiveMemoryWarning() {
@@ -123,34 +91,58 @@ class TMDBMoviesViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
 
-  func posterCellSize(_ numberOfCellsInRow: Int) -> CGSize {
-
-    /* Images on the server have this 3 sizes -
-       300 x 445
-       500 x 741
-       600 x 889
-
-       Ratiio / 69:89
-
-       Link - http://andrew.hedges.name/experiments/aspect_ratio/
-    */
-
-    let originalWidth: CGFloat = 300
-    let originalHeight: CGFloat = 450
-
-    //let posterSize = self.posterCellSize(numberOfCellsInRow, width: originalWidth, height: originalHeight)
-
-    let numberOfCells = CGFloat(numberOfCellsInRow)
-
-    var newWidth: CGFloat = (UIScreen.main.bounds.size.width - (self.spaceBetweenCells() * (numberOfCells + 1))) / numberOfCells
-    newWidth -= self.spaceBetweenCells()
-    let newHeight: CGFloat = (originalHeight / originalWidth) * newWidth
-
-    return CGSize(width: newWidth, height: newHeight + kMovielabelHeight)
-  }
-
   func spaceBetweenCells() -> CGFloat {
     return 10.0
+  }
+}
+extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
+
+  func hideKeyboard() {
+    self.view.endEditing(true)
+  }
+
+  func showLoading() {
+    MBProgressHUD.showAdded(to: self.view, animated: true)
+  }
+
+  func hideLoading() {
+    MBProgressHUD.hide(for: self.view, animated: true)
+  }
+
+  func updateViewOnDataReceive(results: NSArray, totalPages: String) {
+
+    self.lblfInfo.isHidden = true
+    self.moviesTotalPages = totalPages
+
+    if self.loadingMoreAssets == false {
+      if self.arrResults.count > 0 {
+        self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
+      }
+      if results.count == 0 {
+        self.lblfInfo.isHidden = false
+        if let text = self.txtfSearch.text {
+          presenter?.noDataFoundForKeyword(keyword:text)
+        }
+        return
+      }
+      self.arrResults.removeAll(keepingCapacity: false)
+    }
+    if let text = self.txtfSearch.text {
+      if let keywords = self.presenter?.saveData(keyword: text) {
+        self.suggestedKeywords = keywords
+      }
+    }
+    self.arrResults += results as! [AnyObject]
+    self.moviesCollectionView.reloadData()
+    self.fetchInProgress = false
+  }
+
+  func updateViewOnFailToLoad() {
+    self.fetchInProgress = false
+  }
+
+  func showMovieDetails(movieDetailVC: TMDBMovieDetailsViewController) {
+    self.present(movieDetailVC, animated: true, completion:nil)
   }
 
   func showAlert(withTitle title:String, andMessage message:String) {
@@ -158,66 +150,18 @@ class TMDBMoviesViewController: UIViewController {
     alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
     self.present(alert, animated: true, completion: nil)
   }
-  func showPopUp(_ sender: UITextField) {
 
-    var items = [String]()
-    for keywords in suggestedKeywords {
-      if let value = keywords.value(forKeyPath: DB_ATTRIBUTES) as? String  {
-        items.insert(value, at: 0)
-      }
-    }
-    items = items.removeDuplicates()
-    
-    controller = SuggestedValuesTVC(items) { (name) in
-      self.txtfSearch.text = name
-      self.getMovies(withKeywords: name, forPageNumber: self.currPageNumber)
-      self.controller.dismiss(animated: true, completion: nil)
-    }
-    controller.preferredContentSize = CGSize(width: 300.0, height: 300.0)
+  func updateSearch(keyword: String) {
+    self.txtfSearch.text = keyword
+  }
 
-    let presentationController = PopOverPresenter.configurePresentation(forController: controller)
-    presentationController.sourceView = sender
-    presentationController.sourceRect = sender.bounds
-    presentationController.permittedArrowDirections = [.down, .up]
+  func showPopUp() {
     self.present(controller, animated: true)
   }
 
-  // MARK: - DATA_PERSISTANCE
-  func fetch() {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return
-    }
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: DB_ENTITY)
-    fetchRequest.fetchLimit = 10
-    do {
-      suggestedKeywords = try managedContext.fetch(fetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-  }
-
-  func save(keyword: String) {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let entity = NSEntityDescription.entity(forEntityName: DB_ENTITY,
-                                 in: managedContext)!
-
-    let keywords = NSManagedObject(entity: entity,
-                                 insertInto: managedContext)
-
-    keywords.setValue(keyword, forKeyPath: DB_ATTRIBUTES)
-
-    do {
-      try managedContext.save()
-      suggestedKeywords.append(keywords)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
+  func dismissPopOver() {
+    if let _ = self.controller {
+      self.controller.dismiss(animated: true, completion: nil)
     }
   }
 }
@@ -282,27 +226,10 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    MBProgressHUD.showAdded(to: self.view, animated: true)
-
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
     if let tempID = (movieObject as! TMDBMovieObject).id {
-      TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: String(tempID), successBlock: {(movieDetailsObject) ->
-        Void in
-
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let movieDetailViewController = storyboard.instantiateViewController(withIdentifier: "movieDetails") as! TMDBMovieDetailsViewController
-        movieDetailViewController.movieDetailsObject = movieDetailsObject
-
-        MBProgressHUD.hide(for: self.view, animated: true)
-        self.present(movieDetailViewController, animated: true, completion: {() -> Void in
-        })
-      }
-        ,failedBlock:{
-          self.showAlert(withTitle: ERROR_TITLE, andMessage: GENERAL_ERROR_DESC)
-          MBProgressHUD.hide(for: self.view, animated: true)
-      })
+      presenter?.getMovieDetails(withid: String(tempID))
     }
-
   }
 }
 
@@ -314,8 +241,10 @@ extension TMDBMoviesViewController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-    let size = self.posterCellSize(self.minimumRowItemObjectsInRow)
-    return size
+    if let size = self.presenter?.posterCellSize(self.minimumRowItemObjectsInRow) {
+      return size
+    }
+    return CGSize(width: 0.0, height: 0.0) // default values
   }
 }
 
@@ -324,7 +253,10 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
 
   func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
     if suggestedKeywords.count > 0 {
-      self.showPopUp(textField)
+      if let ctrl = presenter?.onPopUpInvoked(withView: textField, withKeywords: suggestedKeywords, andCurrentPageNo: currPageNumber) {
+         controller = ctrl
+        self.showPopUp()
+      }
     }
     return true
   }
@@ -332,16 +264,12 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
     return true
   }
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    if let _ = self.controller {
-      self.controller.dismiss(animated: true, completion: nil)
-    }
+    self.dismissPopOver()
     return true
   }
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = textField.text {
-      if let _ = self.controller {
-        self.controller.dismiss(animated: true, completion: nil)
-      }
+      self.dismissPopOver()
       self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
     }
     return true
