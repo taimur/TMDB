@@ -4,10 +4,9 @@ Test Application developed using [TMDb API](https://developers.themoviedb.org)
 
 ## Requirements
 
- - Xcode 9
- - Swift 4
+ - Xcode 9.4
+ - Swift 4.1
  - Cocoapods 1.5.3
- - Carthage
 
 ## Before Build
 
