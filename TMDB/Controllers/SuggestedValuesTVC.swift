@@ -5,7 +5,7 @@
 
 import UIKit
 
-class SuggestedValuesTVC: UITableViewController {
+public class SuggestedValuesTVC: UITableViewController {
   typealias SelectionHandler = (String) -> Void
   typealias LabelProvider = (String) -> String
 
@@ -20,21 +20,21 @@ class SuggestedValuesTVC: UITableViewController {
     super.init(style: .plain)
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return values.count
+  override public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10 // First 10 has to be shown only
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
     cell.textLabel?.text = labels(values[indexPath.row])
     return cell
   }
 
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     self.dismiss(animated: true)
     onSelect?(values[indexPath.row])
   }
