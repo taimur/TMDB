@@ -37,6 +37,7 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     controller = SuggestedValuesTVC(items) { (keyword) in
       self.view?.updateSearch(keyword: keyword)
       self.getMovies(withKeywords: keyword, forPageNumber: pageNo)
+      self.hideKeyboard()
       self.dismissPopOver()
     }
     controller.preferredContentSize = CGSize(width: 300.0, height: 300.0)
@@ -117,10 +118,6 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: DB_ENTITY)
-    //let attributeSort = NSSortDescriptor(key:DB_ATTRIBUTES, ascending:true)
-    //fetchRequest.sortDescriptors = [attributeSort]
-
-    fetchRequest.fetchLimit = 10
 
     do {
       suggestedKeywords = try managedContext.fetch(fetchRequest)
