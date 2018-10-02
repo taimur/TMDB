@@ -19,19 +19,19 @@ class TMDBMoviesViewController: UIViewController {
   let minimumRowItemObjectsInRow = 3
   let reuseIdentifier = "cellIdentifier"
   let headerIdentifier = "headerIdentifier"
-  @IBOutlet weak var moviesCollectionView:UICollectionView!
+  @IBOutlet weak var moviesCollectionView: UICollectionView!
   private let layout = UICollectionViewFlowLayout()
 
   //IBOutlets
-  @IBOutlet weak var txtfSearch:UITextField!
-  @IBOutlet weak var lblfInfo:UILabel!
+  @IBOutlet weak var txtfSearch: UITextField!
+  @IBOutlet weak var lblfInfo: UILabel!
 
-  fileprivate var arrResults:[AnyObject] = [AnyObject]()
+  fileprivate var arrResults: [AnyObject] = [AnyObject]()
   fileprivate var moviesTotalPages = ""
   var currPageNumber = "1"
 
-  var fetchInProgress:Bool = false // Avoid multiple calls
-  var loadingMoreAssets:Bool = false // Pagination
+  var fetchInProgress: Bool = false // Avoid multiple calls
+  var loadingMoreAssets: Bool = false // Pagination
   var suggestedKeywords: [NSManagedObject] = [] // To Save Values
 
   var controller: SuggestedValuesTVC! // Tableview For PopUp
@@ -63,10 +63,7 @@ class TMDBMoviesViewController: UIViewController {
     layout.minimumInteritemSpacing = spaceBetweenCells()
     layout.minimumLineSpacing = spaceBetweenCells()
     layout.sectionInset =
-      UIEdgeInsetsMake(spaceBetweenCells(),
-                       spaceBetweenCells(),
-                       spaceBetweenCells(),
-                       spaceBetweenCells())
+      UIEdgeInsets(top: spaceBetweenCells(), left: spaceBetweenCells(), bottom: spaceBetweenCells(), right: spaceBetweenCells())
 
     moviesCollectionView.collectionViewLayout = layout
     moviesCollectionView.backgroundColor = UIColor.clear
@@ -76,8 +73,7 @@ class TMDBMoviesViewController: UIViewController {
     moviesCollectionView!.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier)
   }
 
-  internal func getMovies(withKeywords keywords:String, forPageNumber number:String)
-  {
+  internal func getMovies(withKeywords keywords: String, forPageNumber number: String) {
     self.hideKeyboard()
     if self.fetchInProgress == true {
       return
@@ -117,13 +113,13 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
     self.moviesTotalPages = totalPages
 
     if self.loadingMoreAssets == false {
-      if self.arrResults.count > 0 { 
+      if self.arrResults.count > 0 {
         self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
       }
       if results.count == 0 {
         self.lblfInfo.isHidden = false
         if let text = self.txtfSearch.text {
-          presenter?.noDataFoundForKeyword(keyword:text)
+          presenter?.noDataFoundForKeyword(keyword: text)
         }
       }
       self.arrResults.removeAll(keepingCapacity: false)
@@ -151,12 +147,12 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
   }
 
   func showMovieDetails(movieDetailVC: TMDBMovieDetailsViewController) {
-    self.present(movieDetailVC, animated: true, completion:nil)
+    self.present(movieDetailVC, animated: true, completion: nil)
   }
 
-  func showAlert(withTitle title:String, andMessage message:String) {
+  func showAlert(withTitle title: String, andMessage message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
 
@@ -169,7 +165,7 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
   }
 
   func dismissPopOver() {
-    if let _ = self.controller {
+    if self.controller != nil {
       self.controller.dismiss(animated: true, completion: nil)
     }
   }
@@ -218,25 +214,26 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
 
     if movieObject is TMDBMovieObject {
-      let posterCell: TMDBCataloguePosterCell = (collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) ) as! TMDBCataloguePosterCell
+      if let posterCell: TMDBCataloguePosterCell = (collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) ) as? TMDBCataloguePosterCell {
 
       posterCell.contentView.backgroundColor = UIColor.clear
       posterCell.backgroundColor = UIColor.clear
-      posterCell.lblMovieTitle.text = (movieObject as! TMDBMovieObject).title
+      posterCell.lblMovieTitle.text = (movieObject as? TMDBMovieObject)?.title
       posterCell.imageViewContentMode = UIViewContentMode.scaleAspectFit
 
-      if let posterPath = (movieObject as! TMDBMovieObject).poster_path {
+      if let posterPath = (movieObject as? TMDBMovieObject)?.posterPath {
         posterCell.imageURLString = posterPath
       }
 
       cell = posterCell
+    }
     }
     return cell
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
-    if let tempID = (movieObject as! TMDBMovieObject).id {
+    if let tempID = (movieObject as? TMDBMovieObject)?.id {
       presenter?.getMovieDetails(withid: String(tempID))
     }
   }
@@ -245,7 +242,7 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
 extension TMDBMoviesViewController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return UIEdgeInsetsMake(0, self.spaceBetweenCells(), self.spaceBetweenCells(), self.spaceBetweenCells())
+    return UIEdgeInsets(top: 0, left: self.spaceBetweenCells(), bottom: self.spaceBetweenCells(), right: self.spaceBetweenCells())
   }
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -291,11 +288,11 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
   }
 }
 
-//MARK: UIScrollView_Delegate
+// MARK: UIScrollView_Delegate
 extension TMDBMoviesViewController: UIScrollViewDelegate {
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-  let bottom:CGFloat = self.moviesCollectionView.contentOffset.y + self.moviesCollectionView.frame.size.height
+  let bottom: CGFloat = self.moviesCollectionView.contentOffset.y + self.moviesCollectionView.frame.size.height
 
   if bottom >= scrollView.contentSize.height {
     if self.fetchInProgress == false {
@@ -307,8 +304,7 @@ extension TMDBMoviesViewController: UIScrollViewDelegate {
         tempPageNo = 1000 // TMDB APIs have limit for pages of 1 to 1000
       }
       if self.moviesTotalPages.isEmpty == false {
-        if tempPageNo >= Int(self.moviesTotalPages)!
-        {
+        if tempPageNo >= Int(self.moviesTotalPages)! {
           validPage = false
         }
       }

@@ -19,7 +19,7 @@ target 'TMDB' do
     inherit! :search_paths
     # Pods for testing
     pod "Alamofire", "~> 4.7"
-    pod "OHHTTPStubs/Swift"
+    pod "OHHTTPStubs"
   end
 
   target 'TMDBUITests' do

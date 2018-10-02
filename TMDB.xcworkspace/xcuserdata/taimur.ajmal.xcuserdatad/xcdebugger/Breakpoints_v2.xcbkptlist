@@ -6,27 +6,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TMDB/Networking/TMDBCatalogueManager.swift"
-            timestampString = "560210649.5469249"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "getMovies(withKeywords:forPageNumber:successBlock:failedBlock:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TMDBTests/TMDBTests.swift"
-            timestampString = "560210649.5470279"
+            timestampString = "560217364.043537"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
@@ -42,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TMDBTests/TMDBTests.swift"
-            timestampString = "560210649.5476151"
+            timestampString = "560217364.044345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
@@ -58,7 +42,7 @@
                   moduleName = "TMDBTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/taimur.ajmal/Desktop/Personal/Salman%20Dodge%20Durango/TMDB/TMDBTests/TMDBTests.swift"
-                  timestampString = "560210599.413186"
+                  timestampString = "560217367.970389"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "118"
@@ -73,7 +57,7 @@
                   moduleName = "TMDBTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/taimur.ajmal/Desktop/Personal/Salman%20Dodge%20Durango/TMDB/TMDBTests/TMDBTests.swift"
-                  timestampString = "560210599.415779"
+                  timestampString = "560217367.972378"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "118"
@@ -88,7 +72,7 @@
                   moduleName = "TMDBTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/taimur.ajmal/Desktop/Personal/Salman%20Dodge%20Durango/TMDB/TMDBTests/TMDBTests.swift"
-                  timestampString = "560210599.418238"
+                  timestampString = "560217367.9742399"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "118"
@@ -105,7 +89,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TMDBTests/TMDBTests.swift"
-            timestampString = "560210649.548033"
+            timestampString = "560217364.04492"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
@@ -121,7 +105,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TMDBTests/TMDBTests.swift"
-            timestampString = "560210649.54843"
+            timestampString = "560217364.045482"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "121"
@@ -184,7 +168,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TMDBTests/TMDBTests.swift"
-            timestampString = "560210649.548821"
+            timestampString = "560217364.046085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
@@ -200,23 +184,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TMDBTests/TMDBTests.swift"
-            timestampString = "560210649.549201"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "setUp()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TMDBTests/TMDBTests.swift"
-            timestampString = "560210649.54954"
+            timestampString = "560217364.0466861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"

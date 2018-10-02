@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import MarqueeLabel
 
 let kMovielabelHeight: CGFloat = 32
 
@@ -27,10 +28,8 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
 
   var lblMovieTitle: MarqueeLabel!
 
-
   var imageURLString: String! {
-    didSet
-    {
+    didSet {
       self.downloadImage(self.imageURLString)
     }
   }
@@ -52,8 +51,8 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     let labelFrame = CGRect(x: 0, y: frame.size.height - (kMovielabelHeight - 10.0 ), width: frame.size.width, height: kMovielabelHeight)
 
     self.lblMovieTitle = MarqueeLabel(frame: labelFrame)
-    self.lblMovieTitle.type = .continuous
-    self.lblMovieTitle.speed = .duration(10)
+    self.lblMovieTitle.marqueeType = .MLContinuous
+    self.lblMovieTitle.rate = 10
     self.lblMovieTitle.fadeLength = 10.0
     self.lblMovieTitle.trailingBuffer = 30.0
 
@@ -85,11 +84,10 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
 
     let  tempURLString = TMDBUtilities().generateImageLink(withURLString: urlString)
 
-    let url:URL = URL(string: tempURLString)!
+    let url: URL = URL(string: tempURLString)!
 
     self.imageView.sd_setImage(with: url, placeholderImage: nil,
-                               options: [])
-    { (image, error, imageCacheType, imageUrl) in
+                               options: []) { (image, _, _, _) in
       if image != nil {
         self.imageView.image = image
         //self.imageViewContentMode = UIViewContentMode.scaleToFill
@@ -111,4 +109,3 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     })
   }
 }
-

@@ -3,7 +3,6 @@
 // License   https://creativecommons.org/publicdomain/zero/1.0/
 // Source    https://www.ralfebert.de/ios-examples/uikit/choicepopover/
 
-
 import UIKit
 
 /**
@@ -20,7 +19,7 @@ import UIKit
  let presentationController = AlwaysPresentAsPopover.configurePresentation(forController: controller)
  ```
  */
-class PopOverPresenter : NSObject, UIPopoverPresentationControllerDelegate {
+class PopOverPresenter: NSObject, UIPopoverPresentationControllerDelegate {
 
   // `sharedInstance` because the delegate property is weak - the delegate instance needs to be retained.
   private static let sharedInstance = PopOverPresenter()
@@ -33,10 +32,10 @@ class PopOverPresenter : NSObject, UIPopoverPresentationControllerDelegate {
     return .none
   }
 
-  static func configurePresentation(forController controller : UIViewController) -> UIPopoverPresentationController {
+  static func configurePresentation(forController controller: UIViewController) -> UIPopoverPresentationController {
     controller.modalPresentationStyle = .popover
-    let presentationController = controller.presentationController as! UIPopoverPresentationController
-    presentationController.delegate = PopOverPresenter.sharedInstance
-    return presentationController
+    let presentationController = controller.presentationController as? UIPopoverPresentationController
+    presentationController?.delegate = PopOverPresenter.sharedInstance
+    return presentationController!
   }
 }

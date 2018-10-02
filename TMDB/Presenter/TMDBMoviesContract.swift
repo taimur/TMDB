@@ -21,18 +21,18 @@ protocol TMDBMoviesViewProtocol: class {
   func hideKeyboard()
   func setupView()
   func updateSearch(keyword: String)
-  func showAlert(withTitle title:String, andMessage message:String)
+  func showAlert(withTitle title: String, andMessage message: String)
   func showPopUp()
 }
 
 public protocol TMDBMoviesPresenterProtocol: class {
 
   func onScreenloaded()
-  func onPopUpInvoked(withView txtfView: UITextField, withKeywords suggested:[NSManagedObject], andCurrentPageNo pageNo:String) -> SuggestedValuesTVC
+  func onPopUpInvoked(withView txtfView: UITextField, withKeywords suggested: [NSManagedObject], andCurrentPageNo pageNo: String) -> SuggestedValuesTVC
   func getMovies(withKeywords keywords: String, forPageNumber number: String)
-  func getMovieDetails(withid movieID:String)
-  func noDataFoundForKeyword(keyword:String)
-  func saveData(keyword:String) -> [NSManagedObject]
+  func getMovieDetails(withid movieID: String)
+  func noDataFoundForKeyword(keyword: String)
+  func saveData(keyword: String) -> [NSManagedObject]
   func fetchData() -> [NSManagedObject]
   func posterCellSize(_ numberOfCellsInRow: Int) -> CGSize
 }
