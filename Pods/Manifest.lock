@@ -5,6 +5,19 @@ PODS:
     - ObjectMapper (~> 3.3)
   - MBProgressHUD (1.0.0)
   - ObjectMapper (3.3.0)
+  - OHHTTPStubs/Core (6.1.0)
+  - OHHTTPStubs/Default (6.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (6.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (6.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (6.1.0)
+  - OHHTTPStubs/Swift (6.1.0):
+    - OHHTTPStubs/Default
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -14,6 +27,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AlamofireObjectMapper (~> 5.0)
   - MBProgressHUD (~> 1.0.0)
+  - OHHTTPStubs/Swift
   - SDWebImage (~> 3.8)
   - SwiftyJSON
 
@@ -23,6 +37,7 @@ SPEC REPOS:
     - AlamofireObjectMapper
     - MBProgressHUD
     - ObjectMapper
+    - OHHTTPStubs
     - SDWebImage
     - SwiftyJSON
 
@@ -31,9 +46,10 @@ SPEC CHECKSUMS:
   AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  OHHTTPStubs: 1e21c7d2c084b8153fc53d48400d8919d2d432d0
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 8787db8be3f57d1f173dd2978c7f8d9018030eb6
+PODFILE CHECKSUM: ff4d7858075f9f52a795244f12afd6955b630b53
 
 COCOAPODS: 1.5.3
