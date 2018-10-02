@@ -117,7 +117,7 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
     self.moviesTotalPages = totalPages
 
     if self.loadingMoreAssets == false {
-      if self.arrResults.count > 0 {
+      if self.arrResults.count > 0 { 
         self.moviesCollectionView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
       }
       if results.count == 0 {
@@ -125,14 +125,18 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
         if let text = self.txtfSearch.text {
           presenter?.noDataFoundForKeyword(keyword:text)
         }
-        return
       }
       self.arrResults.removeAll(keepingCapacity: false)
     }
+    // Save only for the fist time - not in case of loading more assets in pagination
+    // Save successful queries only
+
     if let text = self.txtfSearch.text {
-      if let keywords = self.presenter?.saveData(keyword: text) {
-        if keywords.count > 0 {
-          self.suggestedKeywords = keywords
+      if results.count > 0 && loadingMoreAssets == false {
+        if let keywords = self.presenter?.saveData(keyword: text) {
+          if keywords.count > 0 {
+            self.suggestedKeywords = keywords
+          }
         }
       }
     }
@@ -274,6 +278,7 @@ extension TMDBMoviesViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = textField.text {
       self.dismissPopOver()
+      self.loadingMoreAssets = false
       self.getMovies(withKeywords: text, forPageNumber: currPageNumber)
     }
     return true

@@ -151,7 +151,7 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
   }
 
   public func noDataFoundForKeyword(keyword: String) {
-    view?.showAlert(withTitle: ERROR_TITLE, andMessage: NO_MOVIE_FOUND + keyword)
+    view?.showAlert(withTitle: ERROR_TITLE, andMessage: NO_MOVIE_FOUND + "'\(keyword)'")
 
   }
   public func dismissPopOver() {
