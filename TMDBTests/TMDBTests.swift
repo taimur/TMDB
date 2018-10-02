@@ -49,13 +49,13 @@ class TMDBTests: XCTestCase {
         super.tearDown()
         OHHTTPStubs.removeAllStubs()
     }
-    
+
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
 
     }
-    
+
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
@@ -66,7 +66,7 @@ class TMDBTests: XCTestCase {
   func testFetchMovies() {
 
     let expect = expectation(description: "fetch tags")
-    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, pages) in
+    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, _) in
       let movies = results as? [TMDBMovieObject]
       XCTAssertNotNil(movies, "Movies Fetched successfully")
       expect.fulfill()
@@ -80,7 +80,7 @@ class TMDBTests: XCTestCase {
   func testFetchMoviess() {
 
     let expect = expectation(description: "fetch tags")
-    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, pages) in
+    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, _) in
       let movies = results as? [TMDBMovieObject]
       XCTAssertNotNil(movies, "Movies Fetched successfully")
       expect.fulfill()
