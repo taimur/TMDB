@@ -10,26 +10,19 @@ import Foundation
 import UIKit
 import CoreData
 
-public protocol TMDBMoviesDelegate: class {
-
-}
 public class TMDBMoviesPresenter: NSObject {
-
 
   typealias T = TMDBMoviesViewProtocol
   weak var view: T?
-  weak var delegate: TMDBMoviesDelegate?
-  let context: TMDBMoviesContext
 
-  init(context: TMDBMoviesContext,
-       delegate: TMDBMoviesDelegate? = nil) {
-    self.context = context
-    self.delegate = delegate
+  override init() {
+
   }
 
 }
 
 extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
+
   public func onPopUpInvoked(withView txtfView: UITextField, withKeywords suggested: [NSManagedObject], andCurrentPageNo pageNo: String) -> SuggestedValuesTVC {
 
     var controller: SuggestedValuesTVC! // Tableview For PopUp
@@ -108,7 +101,7 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
 
     do {
       try managedContext.save()
-      return suggestedKeywords
+      return self.fetchData()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -122,7 +115,11 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
       return suggestedKeywords
     }
     let managedContext = appDelegate.persistentContainer.viewContext
+
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: DB_ENTITY)
+    //let attributeSort = NSSortDescriptor(key:DB_ATTRIBUTES, ascending:true)
+    //fetchRequest.sortDescriptors = [attributeSort]
+
     fetchRequest.fetchLimit = 10
 
     do {

@@ -39,13 +39,16 @@ class TMDBMoviesViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     presenter?.onScreenloaded()
+
+    if let keywords = presenter?.fetchData() {
+      suggestedKeywords = keywords
+    }
+
     // Do any additional setup after loading the view, typically from a nib.
   }
 
   override func viewWillAppear(_ animated: Bool) {
-    if let keywords = presenter?.fetchData() {
-      suggestedKeywords = keywords
-    }
+
   }
   // MARK: USER_DEFINED_FUNCTIONS
   func didTapView() {
@@ -76,7 +79,6 @@ class TMDBMoviesViewController: UIViewController {
   internal func getMovies(withKeywords keywords:String, forPageNumber number:String)
   {
     self.hideKeyboard()
-
     if self.fetchInProgress == true {
       return
     }
@@ -129,7 +131,9 @@ extension TMDBMoviesViewController: TMDBMoviesViewProtocol {
     }
     if let text = self.txtfSearch.text {
       if let keywords = self.presenter?.saveData(keyword: text) {
-        self.suggestedKeywords = keywords
+        if keywords.count > 0 {
+          self.suggestedKeywords = keywords
+        }
       }
     }
     self.arrResults += results as! [AnyObject]
