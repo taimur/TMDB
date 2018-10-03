@@ -219,6 +219,9 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
       posterCell.contentView.backgroundColor = UIColor.clear
       posterCell.backgroundColor = UIColor.clear
       posterCell.lblMovieTitle.text = (movieObject as? TMDBMovieObject)?.title
+      if let date = (movieObject as? TMDBMovieObject)?.releaseDate {
+        posterCell.lblReleasedte.text =  TMDBUtilities().getFormattedDate(strDate: date)
+      }
       posterCell.imageViewContentMode = UIViewContentMode.scaleAspectFit
 
       if let posterPath = (movieObject as? TMDBMovieObject)?.posterPath {
