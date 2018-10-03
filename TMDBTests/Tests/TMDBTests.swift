@@ -8,12 +8,14 @@
 
 import XCTest
 import OHHTTPStubs
+import ObjectMapper
 
 @testable import TMDB
 
 class TMDBTests: XCTestCase {
-    //var tmdbUnderTest: TMDB
-
+   
+    var mock: BaseMock?
+    let bundle = Bundle(for: TMDBTests.self)
       override func setUp() {
         super.setUp()
 
@@ -67,7 +69,7 @@ class TMDBTests: XCTestCase {
 
     let expect = expectation(description: "fetch tags")
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, _) in
-      let movies = results as? [TMDBMovieObject]
+      let movies = results as? [Movie]
       XCTAssertNotNil(movies, "Movies Fetched successfully")
       expect.fulfill()
     }, failedBlock: {
@@ -77,11 +79,11 @@ class TMDBTests: XCTestCase {
     }
   }
 
-  func testFetchMoviess() {
+  func testFetchMoviesDetails() {
 
     let expect = expectation(description: "fetch tags")
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, _) in
-      let movies = results as? [TMDBMovieObject]
+      let movies = results as? [MovieDetails]
       XCTAssertNotNil(movies, "Movies Fetched successfully")
       expect.fulfill()
     }, failedBlock: {
@@ -90,84 +92,4 @@ class TMDBTests: XCTestCase {
       XCTAssertNil(error, "Test time ount. \(error!.localizedDescription)")
     }
   }
-
-  func testFetchMoviesData() {
-
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-
-    //mockNetworkProtocolHandler.mockSessionManager.accessToken = "validToken"
-    let downloadExpectation = expectation(description: "download expectation")
-
-    // values don't matter, its being mocked
-    let moviePresenter = TMDBMoviesPresenter()
-    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    if let controller = storyboard.instantiateInitialViewController() as? TMDBMoviesViewController {
-
-      moviePresenter.view = controller as TMDBMoviesViewProtocol
-      controller.presenter = moviePresenter as TMDBMoviesPresenterProtocol
-    }
-    let mockView = MockMovieVC()
-    mockView.testExpectation = downloadExpectation
-
-    let array = moviePresenter.fetchData()
-
-    wait(for: [mockView.testExpectation!], timeout: 20.0)
-
-    // image urls test
-    XCTAssertNotNil(mockView.imageURLs, "Images not showing")
-    if let imageURLs = mockView.imageURLs {
-
-      XCTAssert(imageURLs.count == 10, "Image count not correct")
-    }
-  }
-}
-
-class MockMovieVC: TMDBMoviesViewProtocol {
-  func dismissPopOver() {
-
-  }
-
-  func updateViewOnDataReceive(results: NSArray, totalPages: String) {
-
-  }
-
-  func updateViewOnFailToLoad() {
-
-  }
-
-  func showMovieDetails(movieDetailVC: TMDBMovieDetailsViewController) {
-
-  }
-
-  func showLoading() {
-
-  }
-
-  func hideLoading() {
-
-  }
-
-  func hideKeyboard() {
-
-  }
-
-  func setupView() {
-
-  }
-
-  func updateSearch(keyword: String) {
-
-  }
-
-  func showAlert(withTitle title: String, andMessage message: String) {
-
-  }
-
-  func showPopUp() {
-
-  }
-
-  var imageURLs: [String]?
-  var testExpectation: XCTestExpectation?
 }
