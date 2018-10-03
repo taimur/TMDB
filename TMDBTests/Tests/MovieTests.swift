@@ -25,7 +25,7 @@ class MovieTests: XCTestCase {
   }
 
   func testValidParse() {
-    mock = BaseMock(file: "movie", error: nil, bundle: bundle)
+    mock = BaseMock(file: "movieList", error: nil, bundle: bundle)
     do {
       let jsonData = try mock!.json()
       if let movie = Mapper<Movie>().map(JSONObject: jsonData) {
@@ -80,7 +80,7 @@ class MovieTests: XCTestCase {
     mock = BaseMock(file: "error", error: nil, bundle: bundle)
     do {
       let jsonData = try mock!.json()
-      //XCTAssertThrowsError(try JSONDecoder().decode(Movie.self, from: jsonData))
+      XCTAssertThrowsError(try JSONDecoder().decode(Movie.self, from: jsonData))
     } catch { }
   }
 }

@@ -85,7 +85,7 @@ class TMDBCatalogueManager: NSObject {
           if let resData = swiftyJsonVar["results"].arrayObject {
 
             for item in resData {
-              if let object = Mapper<TMDBMovieObject>().map(JSONObject: item) {
+              if let object = Mapper<Movie>().map(JSONObject: item) {
                 results.add(object)
               }
 
@@ -102,7 +102,7 @@ class TMDBCatalogueManager: NSObject {
   }
 
   // Fetch Movie Details
-  func getMovieDetails(withMovieId id: String, successBlock: @escaping (_ movieObject: TMDBMovieDetailsObject?) -> Void, failedBlock: @escaping () -> Void) {
+  func getMovieDetails(withMovieId id: String, successBlock: @escaping (_ movieObject: MovieDetails?) -> Void, failedBlock: @escaping () -> Void) {
     let parameters = ""
     let endpoint = kEndPointMovies + self.backSlash + id
     let urlString = self.generateURL(endpoint, parameters: parameters)
@@ -117,7 +117,7 @@ class TMDBCatalogueManager: NSObject {
 
           if let item = swiftyJsonVar.dictionaryObject {
 
-            let object = Mapper<TMDBMovieDetailsObject>().map(JSONObject: item)
+            let object = Mapper<MovieDetails>().map(JSONObject: item)
             results.add(object!)
 
             successBlock(object)

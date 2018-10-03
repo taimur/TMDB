@@ -212,18 +212,18 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
     var cell: UICollectionViewCell = UICollectionViewCell()
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
 
-    if movieObject is TMDBMovieObject {
+    if movieObject is Movie {
       if let posterCell: TMDBCataloguePosterCell = (collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) ) as? TMDBCataloguePosterCell {
 
       posterCell.contentView.backgroundColor = UIColor.clear
       posterCell.backgroundColor = UIColor.clear
-      posterCell.lblMovieTitle.text = (movieObject as? TMDBMovieObject)?.title
-      if let date = (movieObject as? TMDBMovieObject)?.releaseDate {
+      posterCell.lblMovieTitle.text = (movieObject as? Movie)?.title
+      if let date = (movieObject as? Movie)?.releaseDate {
         posterCell.lblReleasedte.text =  TMDBUtilities().getFormattedDate(strDate: date)
       }
       posterCell.imageViewContentMode = UIViewContentMode.scaleAspectFit
 
-      if let posterPath = (movieObject as? TMDBMovieObject)?.posterPath {
+      if let posterPath = (movieObject as? Movie)?.posterPath {
         posterCell.imageURLString = posterPath
       }
 
@@ -235,7 +235,7 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
-    if let tempID = (movieObject as? TMDBMovieObject)?.id {
+    if let tempID = (movieObject as? Movie)?.id {
       presenter?.getMovieDetails(withid: String(tempID))
     }
   }

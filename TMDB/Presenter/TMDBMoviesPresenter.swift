@@ -68,11 +68,11 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
   public func getMovieDetails(withid movieID: String) {
 
     view?.showLoading()
-    TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: String(movieID), successBlock: {(movieDetailsObject) ->
+    TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: String(movieID), successBlock: {(movieDetails) ->
       Void in
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
       if let movieDetailVC = storyboard.instantiateViewController(withIdentifier: "movieDetails") as? TMDBMovieDetailsViewController {
-          movieDetailVC.movieDetailsObject = movieDetailsObject
+          movieDetailVC.movieDetails = movieDetails
           self.view?.hideLoading()
           self.view?.showMovieDetails(movieDetailVC: movieDetailVC)
         }

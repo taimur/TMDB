@@ -24,56 +24,41 @@ class MovieDetailTests: XCTestCase {
   }
 
   func testValidParse() {
-    mock = BaseMock(file: "movie", error: nil, bundle: bundle)
+    mock = BaseMock(file: "movieDetails", error: nil, bundle: bundle)
     do {
       let jsonData = try mock!.json()
       if let movie = Mapper<MovieDetails>().map(JSONObject: jsonData) {
-        /*
-         var adult: Bool
-         var backdropPath: String?
-         var belongsToCollection: Bool?
-         var budget: Int?
-         var genres: [AnyObject]!
-         var homepage: String?
 
-         var id: Int?
-         var imdbID: Int?
-         var originalLanguage: String?
-         var originalTitle: String?
-         var overview: String?
-         var popularity: Float?
-         var posterPath: String?
-
-         var productionCompanies: [AnyObject]!
-         var productionCountries: [AnyObject]!
-
-         var releaseDate: String?
-
-         var revenue: Int?
-         var runtime: Int?
-         var spokenLanguages: [AnyObject]!
-
-         var status: String?
-         var tagline: String?
-
-         var title: String?
-         var video: Bool?
-         var voteAverage: Float?
-         var voteCount: Int?
-         */
-        XCTAssertEqual(movie.posterPath, "/bxVxZb5O9OxCO0oRUNdCnpy9NST.jpg")
         XCTAssertEqual(movie.adult, false)
-        XCTAssertEqual(movie.backdropPath, "/pIUvQ9Ed35wlWhY2oU6OmwEsmzG.jpg")
-        XCTAssertEqual(movie.belongsToCollection, false)
+        XCTAssertEqual(movie.backdropPath, "/ezXodpP429qK0Av89pVNlaXWJkQ.jpg")
         XCTAssertEqual(movie.budget, 100000)
         XCTAssert((movie.genres.count ) > 0)
-        XCTAssertEqual(movie.homepage, "my home")
-        XCTAssertEqual(movie.overview, "Young hobbit Frodo Baggins, after inheriting a mysterious ring from his uncle Bilbo, must leave his home in order to keep it from falling into the hands of its evil creator.")
-        XCTAssertEqual(movie.releaseDate, "2001-12-18")
+        XCTAssertEqual(movie.homepage, "http://www.jackreachermovie.com/")
 
-        XCTAssertEqual(movie.id, 120)
-        XCTAssertEqual(movie.originalTitle, "The Lord of the Rings: The Fellowship of the Ring")
-        XCTAssertEqual(movie.originalLanguage, "Eng")
+        XCTAssertEqual(movie.id, 75780)
+        XCTAssertEqual(movie.imdbID, "tt0790724")
+        XCTAssertEqual(movie.originalLanguage, "en")
+        XCTAssertEqual(movie.originalTitle, "Jack Reacher")
+        XCTAssertEqual(movie.overview, "When a gunman takes five lives with six shots, all evidence points to the suspect in custody. On interrogation, the suspect offers up a single note: 'Get Jack Reacher!' So begins an extraordinary chase for the truth, pitting Jack Reacher against an unexpected enemy, with a skill for violence and a secret to keep.")
+
+        XCTAssertEqual(movie.popularity, 13.265)
+        XCTAssertEqual(movie.posterPath, "/38bmEXmuJuInLs9dwfgOGCHmZ7l.jpg")
+        XCTAssert((movie.productionCompanies.count) > 0 )
+        XCTAssert((movie.productionCountries.count) > 0 )
+        XCTAssertEqual(movie.releaseDate, "2012-12-20")
+
+        XCTAssertEqual(movie.revenue, 218340595)
+        XCTAssertEqual(movie.runtime, 130)
+        XCTAssert((movie.spokenLanguages.count) > 0 )
+        XCTAssertEqual(movie.status, "Released")
+        XCTAssertEqual(movie.tagline, "The Law Has Limits. He Does Not.")
+
+        XCTAssertEqual(movie.title, "The Law Has Limits. He Does Not.")
+        XCTAssertEqual(movie.video, false)
+        XCTAssertEqual(movie.voteAverage, 6.4)
+        XCTAssertEqual(movie.voteCount, 3721)
+
+
         XCTAssertEqual(movie.title, "The Lord of the Rings: The Fellowship of the Ring")
 
         XCTAssertEqual(movie.popularity, 46)
@@ -91,17 +76,39 @@ class MovieDetailTests: XCTestCase {
     mock = BaseMock(file: "fail", error: nil, bundle: bundle)
     do {
       let jsonData = try mock!.json()
-      if let movie = Mapper<Movie>().map(JSONObject: jsonData) {
+      if let movie = Mapper<MovieDetails>().map(JSONObject: jsonData) {
         XCTAssertNotNil(movie)
-        XCTAssertNil(movie.posterPath)
         XCTAssertNil(movie.adult)
-        XCTAssertNil(movie.overview)
-        XCTAssertNil(movie.genres)
-        XCTAssertNil(movie.id)
-        XCTAssertNil(movie.originalTitle)
-        XCTAssertNil(movie.originalLanguage)
-        XCTAssertNil(movie.title)
         XCTAssertNil(movie.backdropPath)
+        XCTAssertNil(movie.budget)
+        XCTAssertNil(movie.genres.count)
+        XCTAssertNil(movie.homepage)
+
+        XCTAssertNil(movie.id)
+        XCTAssertNil(movie.imdbID)
+        XCTAssertNil(movie.originalLanguage)
+        XCTAssertNil(movie.originalTitle)
+        XCTAssertNil(movie.overview)
+
+        XCTAssertNil(movie.popularity)
+        XCTAssertNil(movie.posterPath)
+        XCTAssertNil(movie.productionCompanies.count)
+        XCTAssertNil(movie.productionCountries.count)
+        XCTAssertNil(movie.releaseDate)
+
+        XCTAssertNil(movie.revenue)
+        XCTAssertNil(movie.runtime)
+        XCTAssertNil(movie.spokenLanguages.count)
+        XCTAssertNil(movie.status)
+        XCTAssertNil(movie.tagline)
+
+        XCTAssertNil(movie.title)
+        XCTAssertNil(movie.video)
+        XCTAssertNil(movie.voteAverage)
+        XCTAssertNil(movie.voteCount)
+
+        XCTAssertNil(movie.title)
+
         XCTAssertNil(movie.popularity)
         XCTAssertNil(movie.voteCount)
         XCTAssertNil(movie.video)
@@ -110,13 +117,5 @@ class MovieDetailTests: XCTestCase {
     } catch {
       XCTFail("Parse should not fail")
     }
-  }
-
-  func testParseEmpty() {
-    mock = BaseMock(file: "error", error: nil, bundle: bundle)
-    do {
-      let jsonData = try mock!.json()
-      //XCTAssertThrowsError(try JSONDecoder().decode(Movie.self, from: jsonData))
-    } catch { }
   }
 }

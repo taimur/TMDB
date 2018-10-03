@@ -66,7 +66,6 @@ class TMDBTests: XCTestCase {
     }
 
   func testFetchMovies() {
-
     let expect = expectation(description: "fetch tags")
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, _) in
       let movies = results as? [Movie]
@@ -82,10 +81,20 @@ class TMDBTests: XCTestCase {
   func testFetchMoviesDetails() {
 
     let expect = expectation(description: "fetch tags")
-    TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "Batman", forPageNumber: "1", successBlock: { (results, _) in
-      let movies = results as? [MovieDetails]
-      XCTAssertNotNil(movies, "Movies Fetched successfully")
-      expect.fulfill()
+    TMDBCatalogueManager.sharedInstance.getMovieDetails(withMovieId: "75780", successBlock: { (movieDetails) in
+      if let mDetails = movieDetails {
+        if let id = mDetails.id {
+          if id > 0 {
+              XCTAssertNotNil(movieDetails, "Movie Details Fetched successfully")
+              expect.fulfill()
+          } else {
+              XCTFail("Nil Object")
+            }
+          }
+      }
+      else {
+        XCTFail("Nil Object")
+      }
     }, failedBlock: {
     })
     waitForExpectations(timeout: 10) { (error) in

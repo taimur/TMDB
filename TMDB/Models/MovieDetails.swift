@@ -1,5 +1,5 @@
 //
-//  TMDBMovieDetailsObject.swift
+//  MovieDetails.swift
 //  TMDB
 //
 //  Created by Taimur Ajmal on 10/1/18.
@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class TMDBMovieDetailsObject: Mappable {
+class MovieDetails: Mappable {
 
   var adult: Bool
   var backdropPath: String?
@@ -19,7 +19,7 @@ class TMDBMovieDetailsObject: Mappable {
   var homepage: String?
 
   var id: Int?
-  var imdbID: Int?
+  var imdbID: String?
   var originalLanguage: String?
   var originalTitle: String?
   var overview: String?
@@ -56,7 +56,7 @@ class TMDBMovieDetailsObject: Mappable {
     homepage = ""
 
     id = -1
-    imdbID = -1
+    imdbID = ""
     originalLanguage = ""
     originalTitle = ""
     overview = ""
