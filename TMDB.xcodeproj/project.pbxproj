@@ -15,6 +15,7 @@
 		9C839C0F2164580000D7EC41 /* movieList.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C0D2164580000D7EC41 /* movieList.json */; };
 		9C839C102164580000D7EC41 /* movieDetails.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C0E2164580000D7EC41 /* movieDetails.json */; };
 		9C839C142164610C00D7EC41 /* fail.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C132164610B00D7EC41 /* fail.json */; };
+		9C839C16216475BD00D7EC41 /* ReachabilityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C839C15216475BD00D7EC41 /* ReachabilityExtension.swift */; };
 		9CC365D4215F7A34001D7BDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC365D3215F7A34001D7BDD /* AppDelegate.swift */; };
 		9CC365D6215F7A34001D7BDD /* TMDBMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC365D5215F7A34001D7BDD /* TMDBMoviesViewController.swift */; };
 		9CC365D9215F7A34001D7BDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC365D7215F7A34001D7BDD /* Main.storyboard */; };
@@ -70,6 +71,7 @@
 		9C839C0D2164580000D7EC41 /* movieList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = movieList.json; path = "TMDBTests/Mock Response/movieList.json"; sourceTree = SOURCE_ROOT; };
 		9C839C0E2164580000D7EC41 /* movieDetails.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = movieDetails.json; path = "TMDBTests/Mock Response/movieDetails.json"; sourceTree = SOURCE_ROOT; };
 		9C839C132164610B00D7EC41 /* fail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fail.json; path = "TMDBTests/Mock Response/fail.json"; sourceTree = SOURCE_ROOT; };
+		9C839C15216475BD00D7EC41 /* ReachabilityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityExtension.swift; sourceTree = "<group>"; };
 		9CC365D0215F7A34001D7BDD /* TMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC365D3215F7A34001D7BDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CC365D5215F7A34001D7BDD /* TMDBMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBMoviesViewController.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			children = (
 				9CC36614216100F5001D7BDD /* TMDBUtilities.swift */,
 				9CC36622216268BB001D7BDD /* Constants.swift */,
+				9C839C15216475BD00D7EC41 /* ReachabilityExtension.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -472,8 +475,8 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -483,8 +486,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -595,6 +598,7 @@
 				9CC36615216100F5001D7BDD /* TMDBUtilities.swift in Sources */,
 				9CC3660F2160FDFB001D7BDD /* Movie.swift in Sources */,
 				9CC3660D2160FD8D001D7BDD /* TMDBCataloguePosterCell.swift in Sources */,
+				9C839C16216475BD00D7EC41 /* ReachabilityExtension.swift in Sources */,
 				9CC3661921610507001D7BDD /* TMDBCatalogueManager.swift in Sources */,
 				9CC3663A2162F031001D7BDD /* TMDBMoviesPresenter.swift in Sources */,
 				9CC366202161FF82001D7BDD /* MovieDetails.swift in Sources */,

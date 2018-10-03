@@ -48,8 +48,8 @@ class TMDBMovieDetailsViewController: UIViewController {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
 
-    if dateString?.isEmpty == false {
-      let date = dateFormatter.date(from: dateString!)
+    if dateString.isEmpty == false {
+      let date = dateFormatter.date(from: dateString)
       dateFormatter.dateFormat = "yyyy"
 
       let strDate = dateFormatter.string(from: date!)
@@ -77,8 +77,8 @@ class TMDBMovieDetailsViewController: UIViewController {
 
     // Poster Image
 
-    if movieDetails.posterPath != nil {
-      let tempPosterURLString = TMDBUtilities().generateImageLink(withURLString: movieDetails.posterPath!)
+    if movieDetails.posterPath.isEmpty == false {
+      let tempPosterURLString = TMDBUtilities().generateImageLink(withURLString: movieDetails.posterPath)
 
       self.imgPoster.sd_setImage(with: URL(string: tempPosterURLString), placeholderImage: nil,
                                  options: []) { (image, _, _, _) in
@@ -90,8 +90,8 @@ class TMDBMovieDetailsViewController: UIViewController {
     }
 
     // Backdrop Image
-    if movieDetails.backdropPath != nil {
-      let tempImgBD = TMDBUtilities().generateImageLink(withURLString: movieDetails.backdropPath!)
+    if movieDetails.backdropPath.isEmpty == false {
+      let tempImgBD = TMDBUtilities().generateImageLink(withURLString: movieDetails.backdropPath)
 
       self.imgBackdrop.sd_setImage(with: URL(string: tempImgBD), placeholderImage: nil,
                                    options: []) { (image, _, _, _) in

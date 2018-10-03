@@ -21,6 +21,7 @@ PODS:
   - OHHTTPStubs/NSURLSession (6.1.0):
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (6.1.0)
+  - ReachabilitySwift (4.2.1)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -33,6 +34,7 @@ DEPENDENCIES:
   - MarqueeLabel
   - MBProgressHUD (~> 1.0.0)
   - OHHTTPStubs
+  - ReachabilitySwift
   - SDWebImage (~> 3.8)
   - SwiftLint
   - SwiftyJSON
@@ -45,6 +47,7 @@ SPEC REPOS:
     - MBProgressHUD
     - ObjectMapper
     - OHHTTPStubs
+    - ReachabilitySwift
     - SDWebImage
     - SwiftLint
     - SwiftyJSON
@@ -56,10 +59,11 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   OHHTTPStubs: 1e21c7d2c084b8153fc53d48400d8919d2d432d0
+  ReachabilitySwift: 35720ffea59c1c76d15f885be77fd33e33985427
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: b22cbe852980ad6aa117f4962dff0e929dcf350d
+PODFILE CHECKSUM: 5aa0f43dd2ee4313ad8008c2685c54a802a1dad2
 
 COCOAPODS: 1.5.3

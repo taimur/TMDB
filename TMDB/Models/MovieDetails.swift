@@ -12,36 +12,36 @@ import ObjectMapper
 class MovieDetails: Mappable {
 
   var adult: Bool
-  var backdropPath: String?
-  var belongsToCollection: Bool?
-  var budget: Int?
+  var backdropPath: String
+  var belongsToCollection: Bool
+  var budget: Int
   var genres: [AnyObject]!
   var homepage: String?
 
-  var id: Int?
-  var imdbID: String?
-  var originalLanguage: String?
-  var originalTitle: String?
-  var overview: String?
-  var popularity: Float?
-  var posterPath: String?
+  var id: Int
+  var imdbID: String
+  var originalLanguage: String
+  var originalTitle: String
+  var overview: String
+  var popularity: Float
+  var posterPath: String
 
   var productionCompanies: [AnyObject]!
   var productionCountries: [AnyObject]!
 
-  var releaseDate: String?
+  var releaseDate: String
 
-  var revenue: Int?
-  var runtime: Int?
+  var revenue: Int
+  var runtime: Int
   var spokenLanguages: [AnyObject]!
 
-  var status: String?
-  var tagline: String?
+  var status: String
+  var tagline: String
 
-  var title: String?
-  var video: Bool?
-  var voteAverage: Float?
-  var voteCount: Int?
+  var title: String
+  var video: Bool
+  var voteAverage: Float
+  var voteCount: Int
 
   required convenience init?(map: Map) {
     self.init()

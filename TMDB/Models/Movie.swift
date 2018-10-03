@@ -11,16 +11,16 @@ import ObjectMapper
 
 class Movie: Mappable,Codable {
 
-  var posterPath: String?
+  var posterPath: String
   var adult: Bool
-  var overview: String?
-  var releaseDate: String?
+  var overview: String
+  var releaseDate: String
   var genres: [Int]
-  var id: Int?
-  var originalTitle: String?
-  var originalLanguage: String?
-  var title: String?
-  var backdropPath: String?
+  var id: Int
+  var originalTitle: String
+  var originalLanguage: String
+  var title: String
+  var backdropPath: String
   var popularity: Int
   var voteCount: Int
   var video: Bool

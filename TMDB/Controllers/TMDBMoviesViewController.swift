@@ -48,7 +48,7 @@ class TMDBMoviesViewController: UIViewController {
   }
 
   override func viewWillAppear(_ animated: Bool) {
-
+    presenter?.getMovies(withKeywords: "batman", forPageNumber: "1")
   }
   // MARK: USER_DEFINED_FUNCTIONS
   func didTapView() {
