@@ -66,7 +66,6 @@ class TMDBMoviesViewController: UIViewController {
       UIEdgeInsets(top: spaceBetweenCells(), left: spaceBetweenCells(), bottom: spaceBetweenCells(), right: spaceBetweenCells())
 
     moviesCollectionView.collectionViewLayout = layout
-    moviesCollectionView.backgroundColor = UIColor.clear
 
     // Register cell classes
     moviesCollectionView!.register(TMDBCataloguePosterCell.self, forCellWithReuseIdentifier: reuseIdentifier)

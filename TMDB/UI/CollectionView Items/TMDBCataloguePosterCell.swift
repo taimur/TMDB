@@ -59,7 +59,7 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     self.lblReleasedte.layer.borderColor = UIColor.white.cgColor
     self.lblReleasedte.layer.borderWidth = 1.0
     self.lblReleasedte.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-    self.lblReleasedte.font =  UIFont(name: "Helvetica-Bold", size: 12.0)
+    self.lblReleasedte.font =  UIFont(name: "Helvetica-Light", size: 12.0)
     self.lblReleasedte.textAlignment = NSTextAlignment.center
     self.contentView.addSubview(self.lblReleasedte)
 
@@ -72,7 +72,7 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     self.lblMovieTitle.fadeLength = 10.0
     self.lblMovieTitle.trailingBuffer = 30.0
 
-    self.lblMovieTitle.textColor = UIColor.darkGray
+    self.lblMovieTitle.textColor = UIColor.white
     self.lblMovieTitle!.font =  UIFont(name: "Helvetica", size: 14.0)
     self.lblMovieTitle.textAlignment = NSTextAlignment.center
 

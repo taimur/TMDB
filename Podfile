@@ -14,7 +14,8 @@ target 'TMDB' do
    pod "SwiftyJSON" # Converting response into swift type
    pod "SwiftLint" # Linter used to maintain coding style and patterns
    pod "MarqueeLabel" # Scrolling wide labels
-   
+   pod "ReachabilitySwift" # Internet Concection checker
+
   target 'TMDBTests' do
     inherit! :search_paths
     # Pods for testing
