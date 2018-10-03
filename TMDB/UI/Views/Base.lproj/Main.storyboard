@@ -56,9 +56,13 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="00X-DV-CWU"/>
                                 </connections>
                             </textField>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The list of movies will display here..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6K-vL-GtE">
-                                <rect key="frame" x="43.5" y="323" width="288" height="21"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The list of movies will display here..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6K-vL-GtE">
+                                <rect key="frame" x="27.5" y="309.5" width="319.5" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="QhV-Ft-BlU"/>
+                                    <constraint firstAttribute="height" constant="48" id="gQc-uz-YRI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -66,13 +70,13 @@
                         <color key="backgroundColor" red="0.12156862745098039" green="0.12156862745098039" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="q7b-7U-6Xi" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="14Y-hH-0Y3"/>
-                            <constraint firstItem="w6K-vL-GtE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6DH-Hc-Yg4"/>
                             <constraint firstItem="Xy9-29-xa6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="AUK-kz-Z0h"/>
                             <constraint firstItem="w6K-vL-GtE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ECP-7e-PTv"/>
                             <constraint firstItem="q7b-7U-6Xi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="EI8-vH-A1x"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xy9-29-xa6" secondAttribute="bottom" id="LUp-CZ-gq0"/>
                             <constraint firstItem="Xy9-29-xa6" firstAttribute="top" secondItem="q7b-7U-6Xi" secondAttribute="bottom" constant="20" id="SV7-J6-3lP"/>
                             <constraint firstItem="q7b-7U-6Xi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YRb-Er-1QE"/>
+                            <constraint firstItem="w6K-vL-GtE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wtl-ad-vM2"/>
                             <constraint firstAttribute="trailing" secondItem="Xy9-29-xa6" secondAttribute="trailing" id="yWC-EB-dXA"/>
                         </constraints>
                     </view>

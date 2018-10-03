@@ -169,14 +169,12 @@ extension TMDBMoviesPresenter: TMDBMoviesPresenterProtocol {
      */
 
     let originalWidth: CGFloat = 300
-    let originalHeight: CGFloat = 450
-
-    //let posterSize = self.posterCellSize(numberOfCellsInRow, width: originalWidth, height: originalHeight)
+    let originalHeight: CGFloat = 445
 
     let numberOfCells = CGFloat(numberOfCellsInRow)
 
-    var newWidth: CGFloat = (UIScreen.main.bounds.size.width - (self.spaceBetweenCells() * (numberOfCells + 1))) / numberOfCells
-    newWidth -= self.spaceBetweenCells()
+    var newWidth: CGFloat = (UIScreen.main.bounds.size.width - (self.spaceBetweenCells() * (numberOfCells))) / numberOfCells
+    newWidth -= 5
     let newHeight: CGFloat = (originalHeight / originalWidth) * newWidth
 
     return CGSize(width: newWidth, height: newHeight + kMovielabelHeight)
