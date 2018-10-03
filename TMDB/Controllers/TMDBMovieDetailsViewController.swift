@@ -10,7 +10,7 @@ import UIKit
 
 class TMDBMovieDetailsViewController: UIViewController {
 
-  var movieDetailsObject: TMDBMovieDetailsObject!
+  var movieDetails: MovieDetails!
 
   @IBOutlet weak var imgPoster: UIImageView!
   @IBOutlet weak var imgBackdrop: UIImageView!
@@ -34,22 +34,22 @@ class TMDBMovieDetailsViewController: UIViewController {
   }
   func setupView() {
     // Title
-    self.lblMovieTitle.text = self.movieDetailsObject.title
+    self.lblMovieTitle.text = self.movieDetails.title
 
     // Overview
-    self.txtvOverview.text = self.movieDetailsObject.overview
+    self.txtvOverview.text = self.movieDetails.overview
 
     //Tagline
-    self.lblTagline.text = self.movieDetailsObject.tagline
+    self.lblTagline.text = self.movieDetails.tagline
 
     //Release Year
-    let dateString = self.movieDetailsObject.releaseDate
+    let dateString = self.movieDetails.releaseDate
 
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
 
-    if dateString?.isEmpty == false {
-      let date = dateFormatter.date(from: dateString!)
+    if dateString.isEmpty == false {
+      let date = dateFormatter.date(from: dateString)
       dateFormatter.dateFormat = "yyyy"
 
       let strDate = dateFormatter.string(from: date!)
@@ -60,25 +60,25 @@ class TMDBMovieDetailsViewController: UIViewController {
     //Genres
     let arrGenres = NSMutableArray()
 
-    arrGenres.addObjects(from: ((self.movieDetailsObject.genres as NSArray).value(forKeyPath: "name") as? [Any])!)
+    arrGenres.addObjects(from: ((self.movieDetails.genres as NSArray).value(forKeyPath: "name") as? [Any])!)
     self.lblGenres.text = String(arrGenres.componentsJoined(by: " | "))
 
     //Spoken Languages
     let arrSpokenLanguages = NSMutableArray()
 
-    arrSpokenLanguages.addObjects(from: ((self.movieDetailsObject.spokenLanguages as NSArray).value(forKeyPath: "name") as? [Any])!)
+    arrSpokenLanguages.addObjects(from: ((self.movieDetails.spokenLanguages as NSArray).value(forKeyPath: "name") as? [Any])!)
     self.lblSpokenLanguages.text = String(arrSpokenLanguages.componentsJoined(by: " , "))
 
     //SpokenLanguages
     let arrProductionCompanies = NSMutableArray()
 
-    arrProductionCompanies.addObjects(from: ((self.movieDetailsObject.productionCompanies as NSArray).value(forKeyPath: "name") as? [Any])!)
+    arrProductionCompanies.addObjects(from: ((self.movieDetails.productionCompanies as NSArray).value(forKeyPath: "name") as? [Any])!)
     self.lblProductionCompanies.text = self.lblProductionCompanies.text! + "\n" + String(arrProductionCompanies.componentsJoined(by: " , "))
 
     // Poster Image
 
-    if movieDetailsObject.posterPath != nil {
-      let tempPosterURLString = TMDBUtilities().generateImageLink(withURLString: movieDetailsObject.posterPath!)
+    if movieDetails.posterPath.isEmpty == false {
+      let tempPosterURLString = TMDBUtilities().generateImageLink(withURLString: movieDetails.posterPath)
 
       self.imgPoster.sd_setImage(with: URL(string: tempPosterURLString), placeholderImage: nil,
                                  options: []) { (image, _, _, _) in
@@ -90,8 +90,8 @@ class TMDBMovieDetailsViewController: UIViewController {
     }
 
     // Backdrop Image
-    if movieDetailsObject.backdropPath != nil {
-      let tempImgBD = TMDBUtilities().generateImageLink(withURLString: movieDetailsObject.backdropPath!)
+    if movieDetails.backdropPath.isEmpty == false {
+      let tempImgBD = TMDBUtilities().generateImageLink(withURLString: movieDetails.backdropPath)
 
       self.imgBackdrop.sd_setImage(with: URL(string: tempImgBD), placeholderImage: nil,
                                    options: []) { (image, _, _, _) in

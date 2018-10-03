@@ -1,5 +1,5 @@
 //
-//  TMDBMovieObject.swift
+//  Movie.swift
 //  TMDB
 //
 //  Created by Taimur Ajmal on 9/30/18.
@@ -9,18 +9,18 @@
 import UIKit
 import ObjectMapper
 
-class TMDBMovieObject: Mappable {
+class Movie: Mappable, Codable {
 
-  var posterPath: String?
+  var posterPath: String
   var adult: Bool
-  var overview: String?
-  var releaseDate: String?
-  var genreIds: [Int]
-  var id: Int?
-  var originalTitle: String?
-  var originalLanguage: String?
-  var title: String?
-  var backdropPath: String?
+  var overview: String
+  var releaseDate: String
+  var genres: [Int]
+  var id: Int
+  var originalTitle: String
+  var originalLanguage: String
+  var title: String
+  var backdropPath: String
   var popularity: Int
   var voteCount: Int
   var video: Bool
@@ -35,7 +35,7 @@ class TMDBMovieObject: Mappable {
     adult = false
     overview = ""
     releaseDate = ""
-    genreIds = []
+    genres = []
     id = -1
     originalTitle = ""
     originalLanguage = ""
@@ -54,7 +54,7 @@ class TMDBMovieObject: Mappable {
     adult               <- map["adult"]
     overview            <- map["overview"]
     releaseDate        <- map["release_date"]
-    genreIds           <- map["genre_ids"]
+    genres           <- map["genre_ids"]
     id                  <- map["id"]
     originalTitle      <- map["original_title"]
     originalLanguage   <- map["original_language"]

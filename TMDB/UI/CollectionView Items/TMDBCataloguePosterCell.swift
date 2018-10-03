@@ -11,6 +11,8 @@ import SDWebImage
 import MarqueeLabel
 
 let kMovielabelHeight: CGFloat = 32
+let kMovieReleaseDateHeight: CGFloat = 20
+let kDisplacement: CGFloat = 15.0
 
 class TMDBCataloguePosterCell: UICollectionViewCell {
   var imageViewBackgroundColor: UIColor = UIColor.white {
@@ -36,19 +38,33 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
 
   var imageView: UIImageView!
 
+  var lblReleasedte: UILabel!
+
   override init(frame: CGRect) {
     super.init(frame: frame)
 
     self.imageView = UIImageView(frame: self.bounds)
     self.backgroundColor = UIColor.white
 
-    // TODO: Change me!!
     self.imageView.contentMode = self.imageViewContentMode
     self.imageView.isUserInteractionEnabled = true
     self.contentView.addSubview(self.imageView)
 
-    //premium label
-    let labelFrame = CGRect(x: 0, y: frame.size.height - (kMovielabelHeight - 10.0 ), width: frame.size.width, height: kMovielabelHeight)
+    // Release Data
+    let frameReleasedte = CGRect(x: 0, y: frame.size.height - (kMovieReleaseDateHeight + kDisplacement ), width: frame.size.width, height: kMovieReleaseDateHeight)
+
+    self.lblReleasedte = UILabel(frame: frameReleasedte)
+
+    self.lblReleasedte.textColor = UIColor.white
+    self.lblReleasedte.layer.borderColor = UIColor.white.cgColor
+    self.lblReleasedte.layer.borderWidth = 1.0
+    self.lblReleasedte.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    self.lblReleasedte.font =  UIFont(name: "Helvetica-Light", size: 12.0)
+    self.lblReleasedte.textAlignment = NSTextAlignment.center
+    self.contentView.addSubview(self.lblReleasedte)
+
+    //Mobie Title label
+    let labelFrame = CGRect(x: 0, y: frame.size.height - (kMovielabelHeight - kDisplacement ), width: frame.size.width, height: kMovielabelHeight)
 
     self.lblMovieTitle = MarqueeLabel(frame: labelFrame)
     self.lblMovieTitle.marqueeType = .MLContinuous
@@ -56,7 +72,7 @@ class TMDBCataloguePosterCell: UICollectionViewCell {
     self.lblMovieTitle.fadeLength = 10.0
     self.lblMovieTitle.trailingBuffer = 30.0
 
-    self.lblMovieTitle.textColor = UIColor.darkGray
+    self.lblMovieTitle.textColor = UIColor.white
     self.lblMovieTitle!.font =  UIFont(name: "Helvetica", size: 14.0)
     self.lblMovieTitle.textAlignment = NSTextAlignment.center
 

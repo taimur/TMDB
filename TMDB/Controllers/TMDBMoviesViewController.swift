@@ -48,7 +48,7 @@ class TMDBMoviesViewController: UIViewController {
   }
 
   override func viewWillAppear(_ animated: Bool) {
-
+    //presenter?.getMovies(withKeywords: "batman", forPageNumber: "1")
   }
   // MARK: USER_DEFINED_FUNCTIONS
   func didTapView() {
@@ -56,7 +56,6 @@ class TMDBMoviesViewController: UIViewController {
   }
 
   func setupView() {
-
     self.hideKeyboardOnTap()
     lblfInfo.isHidden = false
     layout.scrollDirection = UICollectionViewScrollDirection.vertical
@@ -66,7 +65,6 @@ class TMDBMoviesViewController: UIViewController {
       UIEdgeInsets(top: spaceBetweenCells(), left: spaceBetweenCells(), bottom: spaceBetweenCells(), right: spaceBetweenCells())
 
     moviesCollectionView.collectionViewLayout = layout
-    moviesCollectionView.backgroundColor = UIColor.clear
 
     // Register cell classes
     moviesCollectionView!.register(TMDBCataloguePosterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -213,15 +211,18 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
     var cell: UICollectionViewCell = UICollectionViewCell()
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
 
-    if movieObject is TMDBMovieObject {
+    if movieObject is Movie {
       if let posterCell: TMDBCataloguePosterCell = (collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) ) as? TMDBCataloguePosterCell {
 
       posterCell.contentView.backgroundColor = UIColor.clear
       posterCell.backgroundColor = UIColor.clear
-      posterCell.lblMovieTitle.text = (movieObject as? TMDBMovieObject)?.title
+      posterCell.lblMovieTitle.text = (movieObject as? Movie)?.title
+      if let date = (movieObject as? Movie)?.releaseDate {
+        posterCell.lblReleasedte.text =  TMDBUtilities().getFormattedDate(strDate: date)
+      }
       posterCell.imageViewContentMode = UIViewContentMode.scaleAspectFit
 
-      if let posterPath = (movieObject as? TMDBMovieObject)?.posterPath {
+      if let posterPath = (movieObject as? Movie)?.posterPath {
         posterCell.imageURLString = posterPath
       }
 
@@ -233,7 +234,7 @@ extension TMDBMoviesViewController: UICollectionViewDelegate {
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let movieObject = self.arrResults[(indexPath as IndexPath).item]
-    if let tempID = (movieObject as? TMDBMovieObject)?.id {
+    if let tempID = (movieObject as? Movie)?.id {
       presenter?.getMovieDetails(withid: String(tempID))
     }
   }

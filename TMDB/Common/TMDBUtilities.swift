@@ -21,4 +21,15 @@ class TMDBUtilities: NSObject {
 
     return self.baseURL + width + url
   }
+
+  func getFormattedDate(strDate: String) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    if let date = dateFormatter.date(from: strDate) {
+      dateFormatter.dateFormat = "dd - MMM - yy"
+      let formatedDte = dateFormatter.string(from: date)
+      return formatedDte
+    }
+    return ""
+  }
 }

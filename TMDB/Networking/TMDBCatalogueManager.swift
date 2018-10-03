@@ -74,18 +74,18 @@ class TMDBCatalogueManager: NSObject {
       case .success:
         let results = NSMutableArray()
         if response.result.value != nil {
-          let swiftyJsonVar = JSON(response.result.value!)
+          let swiftyjson = JSON(response.result.value!)
 
           var totalPages = ""
 
-          if let tempTotalPage = swiftyJsonVar["total_pages"].int {
+          if let tempTotalPage = swiftyjson["total_pages"].int {
             totalPages = String(tempTotalPage)
           }
 
-          if let resData = swiftyJsonVar["results"].arrayObject {
+          if let resData = swiftyjson["results"].arrayObject {
 
             for item in resData {
-              if let object = Mapper<TMDBMovieObject>().map(JSONObject: item) {
+              if let object = Mapper<Movie>().map(JSONObject: item) {
                 results.add(object)
               }
 
@@ -102,7 +102,7 @@ class TMDBCatalogueManager: NSObject {
   }
 
   // Fetch Movie Details
-  func getMovieDetails(withMovieId id: String, successBlock: @escaping (_ movieObject: TMDBMovieDetailsObject?) -> Void, failedBlock: @escaping () -> Void) {
+  func getMovieDetails(withMovieId id: String, successBlock: @escaping (_ movieObject: MovieDetails?) -> Void, failedBlock: @escaping () -> Void) {
     let parameters = ""
     let endpoint = kEndPointMovies + self.backSlash + id
     let urlString = self.generateURL(endpoint, parameters: parameters)
@@ -111,18 +111,13 @@ class TMDBCatalogueManager: NSObject {
 
       switch response.result {
       case .success:
-        let results = NSMutableArray()
         if response.result.value != nil {
-          let swiftyJsonVar = JSON(response.result.value!)
-
-          if let item = swiftyJsonVar.dictionaryObject {
-
-            let object = Mapper<TMDBMovieDetailsObject>().map(JSONObject: item)
-            results.add(object!)
-
-            successBlock(object)
+          let swiftyjson = JSON(response.result.value!)
+          if let item = swiftyjson.dictionaryObject {
+            if let object = Mapper<MovieDetails>().map(JSONObject: item) {
+              successBlock(object)
+            }
           }
-
         }
       case .failure:
         if let error = response.result.error {
