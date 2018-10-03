@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class Movie: Mappable,Codable {
+class Movie: Mappable, Codable {
 
   var posterPath: String
   var adult: Bool

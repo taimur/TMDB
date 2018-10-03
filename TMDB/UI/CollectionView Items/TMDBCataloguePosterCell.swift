@@ -12,7 +12,7 @@ import MarqueeLabel
 
 let kMovielabelHeight: CGFloat = 32
 let kMovieReleaseDateHeight: CGFloat = 20
-let kDisplacement:CGFloat = 15.0
+let kDisplacement: CGFloat = 15.0
 
 class TMDBCataloguePosterCell: UICollectionViewCell {
   var imageViewBackgroundColor: UIColor = UIColor.white {
