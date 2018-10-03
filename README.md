@@ -19,5 +19,6 @@ Before build the project please run a `pod install`
  - *SDWebImage*: Easy assync image loader and provides cache
  - *MBProgressHUD*: Display loading animations
  - *SwiftyJSON*: Converting response into swift type
- - *Reachability*: Internet Concection checker
+ - *Reachability*: Internet Concection check
  - *SwiftLint*: Linter used to maintain coding style and patterns
+ - *MarqueeLabel*: Animate and scroll wide lables
