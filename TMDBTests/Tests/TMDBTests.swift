@@ -70,18 +70,18 @@ class TMDBTests: XCTestCase {
     TMDBCatalogueManager.sharedInstance.getMovies(withKeywords: "batman", forPageNumber: "1", successBlock: { (results, _) in
       do {
         if let movie = results?.lastObject as? Movie {
-          XCTAssertEqual(movie.posterPath, "/6g7iQJAgyDn9mep98RXhLI64RcA.jpg")
+          XCTAssertEqual(movie.posterPath, "/j3SFJqZPeeB9g5JMU7UFLgEqj2T.jpg")
           XCTAssertEqual(movie.adult, false)
-          XCTAssertEqual(movie.overview, "Damian Wayne is having a hard time coping with his father\'s \"no killing\" rule. Meanwhile, Gotham is going through hell with threats such as the insane Dollmaker, and the secretive Court of Owls.")
-          XCTAssertEqual(movie.releaseDate, "2015-04-14")
+          XCTAssertEqual(movie.overview, "Batman learns that he has a violent, unruly pre-teen son with Talia al Ghul named Damian Wayne who is secretly being raised by Ra\'s al Ghul and the League of Assassins. When Ra\'s al Ghul apparently dies after a battle with Deathstroke, Batman must work to stop his long-lost son from taking revenge and guiding him to a righteous path, in addition to the chance for the pair to truly acknowledging each other as family.")
+          XCTAssertEqual(movie.releaseDate, "2014-04-20")
           XCTAssert((movie.genres.count ) > 0)
-          XCTAssertEqual(movie.id, 321528)
-          XCTAssertEqual(movie.originalTitle, "Batman vs. Robin")
+          XCTAssertEqual(movie.id, 251519)
+          XCTAssertEqual(movie.originalTitle, "Son of Batman")
           XCTAssertEqual(movie.originalLanguage, "en")
-          XCTAssertEqual(movie.title, "Batman vs. Robin")
-          XCTAssertEqual(movie.backdropPath, "/oERfMmGc1GJRnC8IuFUH7zpR5z5.jpg")
-          XCTAssertEqual(movie.popularity, 5)
-          XCTAssertEqual(movie.voteCount, 314)
+          XCTAssertEqual(movie.title, "Son of Batman")
+          XCTAssertEqual(movie.backdropPath, "/omK35Mr3oks6bd5efrgsO7CzmLP.jpg")
+          XCTAssertEqual(movie.popularity, 7)
+          XCTAssertEqual(movie.voteCount, 434)
           XCTAssertEqual(movie.video, false)
           XCTAssertEqual(movie.voteAverage, 6)
         } else {
@@ -116,7 +116,7 @@ class TMDBTests: XCTestCase {
           XCTAssertEqual(movieDetails.originalTitle, "Jack Reacher")
           XCTAssertEqual(movieDetails.overview, "When a gunman takes five lives with six shots, all evidence points to the suspect in custody. On interrogation, the suspect offers up a single note: \"Get Jack Reacher!\" So begins an extraordinary chase for the truth, pitting Jack Reacher against an unexpected enemy, with a skill for violence and a secret to keep.")
 
-          XCTAssertEqual(movieDetails.popularity, 13.265)
+          XCTAssertEqual(movieDetails.popularity, 14.165)
           XCTAssertEqual(movieDetails.posterPath, "/38bmEXmuJuInLs9dwfgOGCHmZ7l.jpg")
           XCTAssert((movieDetails.productionCompanies.count) > 0 )
           XCTAssert((movieDetails.productionCountries.count) > 0 )
@@ -131,14 +131,8 @@ class TMDBTests: XCTestCase {
           XCTAssertEqual(movieDetails.title, "Jack Reacher")
           XCTAssertEqual(movieDetails.video, false)
           XCTAssertEqual(movieDetails.voteAverage, 6.4)
-          XCTAssertEqual(movieDetails.voteCount, 3721)
+          XCTAssertEqual(movieDetails.voteCount, 3829)
 
-          XCTAssertEqual(movieDetails.title, "Jack Reacher")
-
-          XCTAssertEqual(movieDetails.popularity, 13.265)
-          XCTAssertEqual(movieDetails.voteCount, 3721)
-          XCTAssertEqual(movieDetails.video, false)
-          XCTAssertEqual(movieDetails.voteAverage, 6.4)
         } else {
           XCTFail("Did not expect a nil object")
         }

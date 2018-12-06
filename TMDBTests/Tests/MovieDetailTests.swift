@@ -27,7 +27,7 @@ class MovieDetailTests: XCTestCase {
     mock = BaseMock(file: "movieDetails", error: nil, bundle: bundle)
     do {
       let jsonData = try mock!.json()
-      if let movie = Mapper<MovieDetails>().map(JSONObject: jsonData) {
+      if let movieDetails = Mapper<MovieDetails>().map(JSONObject: jsonData) {
 
         XCTAssertEqual(movieDetails.adult, false)
         XCTAssertEqual(movieDetails.backdropPath, "/ezXodpP429qK0Av89pVNlaXWJkQ.jpg")

@@ -9,14 +9,14 @@
 /* Begin PBXBuildFile section */
 		1B3C0B96EE190EBD1C8101B3 /* Pods_TMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C5EC25951A715F5EDC09D5 /* Pods_TMDB.framework */; };
 		1D272C064FD6D15C145F494B /* Pods_TMDBTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF670EE702A0FB6709F2EF86 /* Pods_TMDBTests.framework */; };
+		9C5D2B6721B904BE004A6A10 /* fail.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C5D2B6321B904BE004A6A10 /* fail.json */; };
+		9C5D2B6921B904BE004A6A10 /* movieList.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C5D2B6421B904BE004A6A10 /* movieList.json */; };
+		9C5D2B6B21B904BE004A6A10 /* movieDetails.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C5D2B6521B904BE004A6A10 /* movieDetails.json */; };
 		9C839C0621644EBD00D7EC41 /* BaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C839C0521644EBD00D7EC41 /* BaseMock.swift */; };
 		9C839C0A2164552400D7EC41 /* MovieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C839C092164552400D7EC41 /* MovieTests.swift */; };
 		9C839C0C2164559E00D7EC41 /* MovieDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C839C0B2164559E00D7EC41 /* MovieDetailTests.swift */; };
-		9C839C0F2164580000D7EC41 /* movieList.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C0D2164580000D7EC41 /* movieList.json */; };
-		9C839C102164580000D7EC41 /* movieDetails.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C0E2164580000D7EC41 /* movieDetails.json */; };
-		9C839C142164610C00D7EC41 /* fail.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C132164610B00D7EC41 /* fail.json */; };
 		9C839C16216475BD00D7EC41 /* ReachabilityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C839C15216475BD00D7EC41 /* ReachabilityExtension.swift */; };
-		9C839C2A216481C800D7EC41 /* iTunesArtwork@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C27216481C800D7EC41 /* iTunesArtwork@1x.png */; };
+		9C839C2A216481C800D7EC41 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C27216481C800D7EC41 /* iTunesArtwork.png */; };
 		9C839C2B216481C800D7EC41 /* iTunesArtwork@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C28216481C800D7EC41 /* iTunesArtwork@3x.png */; };
 		9C839C2C216481C800D7EC41 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C839C29216481C800D7EC41 /* iTunesArtwork@2x.png */; };
 		9CC365D4215F7A34001D7BDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC365D3215F7A34001D7BDD /* AppDelegate.swift */; };
@@ -68,14 +68,14 @@
 		2D708326D7B75323B2ADCB40 /* Pods_TMDBUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TMDBUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFF5361C261E07CFE5C4201 /* Pods-TMDBUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDBUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMDBUITests/Pods-TMDBUITests.release.xcconfig"; sourceTree = "<group>"; };
 		71BCCD472746FDB499320D84 /* Pods-TMDBTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDBTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMDBTests/Pods-TMDBTests.release.xcconfig"; sourceTree = "<group>"; };
+		9C5D2B6321B904BE004A6A10 /* fail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fail.json; sourceTree = "<group>"; };
+		9C5D2B6421B904BE004A6A10 /* movieList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = movieList.json; sourceTree = "<group>"; };
+		9C5D2B6521B904BE004A6A10 /* movieDetails.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = movieDetails.json; sourceTree = "<group>"; };
 		9C839C0521644EBD00D7EC41 /* BaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMock.swift; sourceTree = "<group>"; };
 		9C839C092164552400D7EC41 /* MovieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTests.swift; sourceTree = "<group>"; };
 		9C839C0B2164559E00D7EC41 /* MovieDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTests.swift; sourceTree = "<group>"; };
-		9C839C0D2164580000D7EC41 /* movieList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = movieList.json; path = "TMDBTests/Mock Response/movieList.json"; sourceTree = SOURCE_ROOT; };
-		9C839C0E2164580000D7EC41 /* movieDetails.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = movieDetails.json; path = "TMDBTests/Mock Response/movieDetails.json"; sourceTree = SOURCE_ROOT; };
-		9C839C132164610B00D7EC41 /* fail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fail.json; path = "TMDBTests/Mock Response/fail.json"; sourceTree = SOURCE_ROOT; };
 		9C839C15216475BD00D7EC41 /* ReachabilityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityExtension.swift; sourceTree = "<group>"; };
-		9C839C27216481C800D7EC41 /* iTunesArtwork@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@1x.png"; sourceTree = "<group>"; };
+		9C839C27216481C800D7EC41 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		9C839C28216481C800D7EC41 /* iTunesArtwork@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@3x.png"; sourceTree = "<group>"; };
 		9C839C29216481C800D7EC41 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		9CC365D0215F7A34001D7BDD /* TMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,19 +162,12 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		9C652FB22163D13D00DD4791 /* MockClasses */ = {
-			isa = PBXGroup;
-			children = (
-				9C839C132164610B00D7EC41 /* fail.json */,
-				9C839C0E2164580000D7EC41 /* movieDetails.json */,
-				9C839C0D2164580000D7EC41 /* movieList.json */,
-			);
-			path = MockClasses;
-			sourceTree = "<group>";
-		};
 		9C652FB32163D23400DD4791 /* Mock Response */ = {
 			isa = PBXGroup;
 			children = (
+				9C5D2B6321B904BE004A6A10 /* fail.json */,
+				9C5D2B6521B904BE004A6A10 /* movieDetails.json */,
+				9C5D2B6421B904BE004A6A10 /* movieList.json */,
 			);
 			path = "Mock Response";
 			sourceTree = "<group>";
@@ -225,7 +218,7 @@
 				9CC365DD215F7A36001D7BDD /* Assets.xcassets */,
 				9CC365E2215F7A36001D7BDD /* Info.plist */,
 				9CC365DA215F7A34001D7BDD /* TMDB.xcdatamodeld */,
-				9C839C27216481C800D7EC41 /* iTunesArtwork@1x.png */,
+				9C839C27216481C800D7EC41 /* iTunesArtwork.png */,
 				9C839C29216481C800D7EC41 /* iTunesArtwork@2x.png */,
 				9C839C28216481C800D7EC41 /* iTunesArtwork@3x.png */,
 			);
@@ -237,7 +230,6 @@
 			children = (
 				9C839C122164581800D7EC41 /* Tests */,
 				9C652FB32163D23400DD4791 /* Mock Response */,
-				9C652FB22163D13D00DD4791 /* MockClasses */,
 				9CC365ED215F7A36001D7BDD /* Info.plist */,
 			);
 			path = TMDBTests;
@@ -451,7 +443,7 @@
 				9C839C2C216481C800D7EC41 /* iTunesArtwork@2x.png in Resources */,
 				9C839C2B216481C800D7EC41 /* iTunesArtwork@3x.png in Resources */,
 				9CC365DE215F7A36001D7BDD /* Assets.xcassets in Resources */,
-				9C839C2A216481C800D7EC41 /* iTunesArtwork@1x.png in Resources */,
+				9C839C2A216481C800D7EC41 /* iTunesArtwork.png in Resources */,
 				9CC365D9215F7A34001D7BDD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,9 +452,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C839C142164610C00D7EC41 /* fail.json in Resources */,
-				9C839C0F2164580000D7EC41 /* movieList.json in Resources */,
-				9C839C102164580000D7EC41 /* movieDetails.json in Resources */,
+				9C5D2B6B21B904BE004A6A10 /* movieDetails.json in Resources */,
+				9C5D2B6921B904BE004A6A10 /* movieList.json in Resources */,
+				9C5D2B6721B904BE004A6A10 /* fail.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
